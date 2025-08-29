@@ -1,7 +1,7 @@
 package com.skillup.skillup.model;
 
 /**
- * Entidad que representa la tabla 'roles_sistema' en la base de datos.
+ * Entidad que representa la tabla 'roles_sistema' en la base de datoss.
  * Esta clase actúa como el "modelo" o "dominio" de los datos.
  */
 @Entity
