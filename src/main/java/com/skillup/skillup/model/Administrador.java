@@ -1,5 +1,10 @@
 package com.skillup.skillup.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 /**
  * Entidad que representa la tabla 'roles_sistema' en la base de datoss.
  * Esta clase actúa como el "modelo" o "dominio" de los datos.
