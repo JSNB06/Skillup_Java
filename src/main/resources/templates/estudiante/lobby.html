@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillUp</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex flex-col min-h-screen">
+
+<!-- Header -->
+<div th:replace="layouts/headerprincipal :: header"></div>
+
+<div class="flex flex-1">
+  <!-- SIDEBAR -->
+  <div class="group relative w-16 hover:w-64 bg-blue-200 transition-all duration-300 overflow-hidden flex flex-col p-2">
+    <div class="flex items-center gap-2 p-2">
+      <img th:src="@{/assets/Imagenes/LogoSkillup.png}" alt="SkillUp Logo"
+           class="w-8 group-hover:w-10 transition-all"/>
+      <span class="text-gray-700 font-bold hidden group-hover:block">SKILLUP</span>
+    </div>
+    <nav class="mt-4 space-y-2">
+      <a th:href="@{/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+        <span class="text-xl">🏠</span> <span class="hidden group-hover:block">Inicio</span>
+      </a>
+      <a th:href="@{/cursos}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+        <span class="text-xl">📚</span> <span class="hidden group-hover:block">Cursos</span>
+      </a>
+      <a th:href="@{/certificacioncursos}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+        <span class="text-xl">🎓</span> <span class="hidden group-hover:block">Certificados</span>
+      </a>
+      <a th:href="@{/foro}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+        <span class="text-xl">💬</span> <span class="hidden group-hover:block">Foro</span>
+      </a>
+      <a th:href="@{/soporte}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+        <span class="text-xl">⚙️</span> <span class="hidden group-hover:block">Soporte</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- CONTENIDO -->
+  <main class="flex-1 px-6 md:px-16 py-12 bg-gray-50">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div class="space-y-4">
+        <h1 class="text-4xl font-extrabold text-gray-900">APRENDE SIN LÍMITES</h1>
+        <p class="text-gray-800 text-lg">
+          Potencia tus habilidades, mejora tu futuro con herramientas, cursos y apoyo académico diseñado para ti.
+        </p>
+
+        <div class="flex items-start gap-3">
+          <span class="text-purple-600 text-xl">✔️</span>
+          <div>
+            <strong class="text-gray-800">Tareas calificadas</strong>
+            <p class="text-gray-600 text-sm">Reciba retroalimentación personalizada para mejorar continuamente.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="text-purple-600 text-xl">✔️</span>
+          <div>
+            <strong class="text-gray-800">Asistencia académica</strong>
+            <p class="text-gray-600 text-sm">Asesoría inmediata de tutores y comunidad estudiantil.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center">
+        <img th:src="@{/assets/Imagenes/Certificado.jpg}" alt="Certificado"
+             class="w-full max-w-sm rounded-lg shadow-lg"/>
+      </div>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="mt-12 bg-white rounded-xl shadow-md p-6 grid grid-cols-1 sm:grid-cols-3 text-center gap-6">
+      <div>
+        <p class="text-3xl font-bold text-purple-700">+5,000</p>
+        <p class="text-gray-600">Estudiantes activos</p>
+      </div>
+      <div>
+        <p class="text-3xl font-bold text-purple-700">85%</p>
+        <p class="text-gray-600">Del éxito profesional depende de habilidades blandas</p>
+      </div>
+      <div>
+        <p class="text-3xl font-bold text-purple-700">98%</p>
+        <p class="text-gray-600">Satisfacción estudiantil</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl p-10 text-center shadow-lg mt-10">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">¿Listo para comenzar?</h2>
+      <p class="mb-6 text-lg">Explora nuestros cursos y da el primer paso hacia tu futuro profesional.</p>
+      <a th:href="@{/cursos}"
+         class="bg-white text-blue-600 font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition">
+        Explorar Cursos
+      </a>
+    </div>
+  </main>
+</div>
+
+<!-- Footer -->
+<div th:replace="layouts/footer :: footer"></div>
+
+</body>
+</html>
