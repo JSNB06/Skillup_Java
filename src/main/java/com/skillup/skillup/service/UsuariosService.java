@@ -19,8 +19,8 @@ public class UsuariosService {
         return (List<Usuarios>)usuariosRepository.findAll();
     }
 
-    public Optional<Usuarios> findByIdRol(String idRol) {
-        return usuariosRepository.findById(idRol);
+    public Optional<Usuarios> findById(String id) {
+        return usuariosRepository.findById(id);
     }
 
     @Transactional

@@ -82,11 +82,10 @@
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
             <input
-                    type="text"
+                    type="password"
                     th:field="*{contrasena}"
-                    minlength="8"
-                    title="Mínimo 8 caracteres"
-                    class="w-full rounded-xl border border-gray-300 p-3 shadow"
+                    class="w-full rounded-xl border border-gray-300 p-3 shadow bg-gray-100 cursor-not-allowed"
+                    readonly
             />
         </div>
 

@@ -29,12 +29,15 @@ public class HomeAdmin {
         return "administrador/homeAdmin";
     }
 
+
+
     @PostMapping("/administrador/filtrar")
     public String filtrar(@RequestParam("rol") String rol, Model model){
 
         if("cursos".equals(rol)){
-            return "redirect:/administrador/cursosAdmin";
+            return "redirect:/cursosadmin";
         }
+
         List<Usuarios> usuariosFiltrados;
 
         try{

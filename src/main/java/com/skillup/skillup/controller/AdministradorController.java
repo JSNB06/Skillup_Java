@@ -61,7 +61,7 @@ public class AdministradorController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable String id, Model model){
-        Optional<Usuarios> usuarios = usuariosService.findByIdRol(id);
+        Optional<Usuarios> usuarios = usuariosService.findById(id);
         if(usuarios.isPresent()){
             model.addAttribute("usuarios", usuarios.get());
             List<Rol> roles = rolService.obtenerTodosLosRoles();
@@ -72,12 +72,25 @@ public class AdministradorController {
     }
 
     @PostMapping("/actualizar/{id}")
-    public String actualizar(@PathVariable String id, @ModelAttribute Usuarios usuarios, RedirectAttributes redirectAttributes){
-        usuarios.setIdentificacion(id);
-        usuariosService.save(usuarios);
+    public String actualizar(@PathVariable String id,
+                             @ModelAttribute Usuarios usuarioForm,
+                             RedirectAttributes redirectAttributes) {
+
+        Usuarios usuarioBD = usuariosService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        usuarioBD.setNombre(usuarioForm.getNombre());
+        usuarioBD.setApellido1(usuarioForm.getApellido1());
+        usuarioBD.setApellido2(usuarioForm.getApellido2());
+        usuarioBD.setContrasena(usuarioForm.getContrasena());
+        usuarioBD.setCorreo(usuarioForm.getCorreo());
+
+        usuariosService.save(usuarioBD);
+
         redirectAttributes.addFlashAttribute("mensaje", "Usuario actualizado exitosamente");
         return "redirect:/administrador";
     }
+
 
     @GetMapping("/eliminar/{id}")
     public String eliminar(@PathVariable String id, RedirectAttributes redirectAttributes){

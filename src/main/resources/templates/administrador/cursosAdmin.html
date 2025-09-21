@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar cursos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 via-white to-purple-50">
+
+<div class="max-w-6xl mx-auto bg-white p-10 rounded-3xl shadow-2xl border border-purple-200">
+    <h1 class="text-3xl md:text-4xl font-extrabold text-purple-700 text-center mb-10">
+        Gestión de cursos
+    </h1>
+
+    <!-- FORMULARIO FILTRO -->
+    <!-- La acción del formulario ha sido cambiada a /cursosadmin/filtrar para que coincida con el controlador -->
+    <form th:action="@{/cursosadmin/filtrar}" method="post"
+          class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+
+        <!-- NOMBRE CURSO -->
+        <input name="nombre" type="text"
+               th:value="${oldNombre}"
+               placeholder="Nombre del curso"
+               class="border rounded-xl p-3 w-full">
+
+        <!-- NOMBRE ESTUDIANTE -->
+        <input name="estudiante" type="text"
+               th:value="${oldEstudiante}"
+               placeholder="Nombre del estudiante"
+               class="border rounded-xl p-3 w-full">
+
+        <!-- IDENTIFICACIÓN DEL ESTUDIANTE -->
+        <input name="identificacion" type="text"
+               th:value="${oldIdentificacion}"
+               placeholder="Identificación"
+               class="border rounded-xl p-3 w-full">
+
+        <!-- Botón Filtrar -->
+        <button type="submit"
+                class="bg-purple-700 hover:bg-purple-800 text-white font-semibold rounded-xl shadow px-6 py-3">
+            Filtrar
+        </button>
+    </form>
+
+    <!-- TABLA DE RESULTADOS -->
+    <div class="overflow-x-auto">
+        <table class="min-w-full border text-center">
+            <thead>
+            <tr class="bg-purple-200 text-purple-900">
+                <th class="py-3 px-4 border">ID</th>
+                <th class="py-3 px-4 border">Curso</th>
+                <th class="py-3 px-4 border">Nivel</th>
+                <th class="py-3 px-4 border">Duración (min)</th>
+                <th class="py-3 px-4 border">Nombre</th>
+                <th class="py-3 px-4 border">Apellido</th>
+                <th class="py-3 px-4 border">Identificación</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="curso : ${cursos}" class="odd:bg-purple-50 even:bg-white">
+                <td class="py-2 px-4 border" th:text="${curso.idCurso}"></td>
+                <td class="py-2 px-4 border" th:text="${curso.nombreCurso}"></td>
+                <td class="py-2 px-4 border" th:text="${curso.nivelDificultad}"></td>
+                <td class="py-2 px-4 border" th:text="${curso.duracion}"></td>
+                <!-- CORRECCIÓN: Se cambió 'curso.usuario' por 'curso.usuarios' (en plural) -->
+                <td class="py-2 px-4 border" th:text="${curso.usuarios.nombre}"></td>
+                <td class="py-2 px-4 border" th:text="${curso.usuarios.apellido1}"></td>
+                <td class="py-2 px-4 border" th:text="${curso.usuarios.identificacion}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón Volver -->
+    <div class="text-center mt-10">
+        <!-- CORRECCIÓN: La URL del botón "Volver" debe ir a la página de selección -->
+        <a th:href="@{/cursosadmin}"
+           class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-xl shadow">
+            ← Volver
+        </a>
+    </div>
+</div>
+
+</body>
+
+</html>
