@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillUp - Pago</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<!-- Header -->
+<div th:replace="layouts/headerprincipal :: header('SkillUp')"></div>
+
+<!-- Sección de pago -->
+<section class="max-w-4xl mx-auto my-12 p-6 bg-white shadow-md rounded-lg">
+  <h2 class="text-2xl font-semibold mb-6">Resumen de Compra</h2>
+
+  <!-- Carrito resumen -->
+  <div class="border p-4 rounded-lg mb-8 bg-blue-50">
+    <p class="text-gray-600">Estás a punto de adquirir un curso en SkillUp.</p>
+  </div>
+
+  <!-- Opciones de pago -->
+  <h2 class="text-xl font-semibold mb-4">Selecciona tu método de pago</h2>
+  <div class="space-y-4">
+
+    <!-- PayPal -->
+    <div class="flex justify-between items-center border p-4 rounded-lg">
+      <div class="flex items-center gap-4">
+        <img th:src="@{/assets/Imagenes/paypal.png}" alt="paypal" class="w-20 h-auto"/>
+        <span class="font-medium">Pagar con PayPal</span>
+      </div>
+      <a href="#" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Continuar</a>
+    </div>
+
+    <!-- PSE -->
+    <div class="flex justify-between items-center border p-4 rounded-lg">
+      <div class="flex items-center gap-4">
+        <img th:src="@{/assets/Imagenes/pse.png}" alt="PSE" class="w-20 h-auto"/>
+        <span class="font-medium">Pagar con PSE</span>
+      </div>
+      <a href="#" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Continuar</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="layouts/footer :: footer"></div>
+
+</body>
+</html>

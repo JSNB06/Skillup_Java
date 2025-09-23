@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillUp</title>
+    <link rel="stylesheet" href="/css/tailwind.css">
+</head>
+<body>
+    <!-- Header -->
+    <div th:replace="layouts/headerprincipal :: header"></div>
+
+    <main class="p-6">
+        <h1 class="text-2xl font-bold">Da tus primeros pasos.</h1>
+        <p class="text-gray-600">Descubre cursos de expertos del mundo.</p>
+
+        <!-- Lista de cursos -->
+        <section class="mt-6 space-y-6">
+
+            <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4">
+                <img th:src="@{/assets/Imagenes/Junta.png}" alt="Negociación" class="w-12 h-12">
+                <div class="flex-1">
+                    <strong class="bg-gray-200 px-2 py-1 rounded">Negociación</strong>
+                    <p class="text-gray-700">Negociar con confianza y estrategia...</p>
+                </div>
+                <a th:href="@{/negociacion}" class="bg-blue-500 text-white px-4 py-2 rounded">Saber Más</a>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4">
+                <img th:src="@{/assets/Imagenes/Lider.png}" alt="Liderazgo" class="w-12 h-12">
+                <div class="flex-1">
+                    <strong class="bg-gray-200 px-2 py-1 rounded">Liderazgo</strong>
+                    <p class="text-gray-700">Desarrolla tu capacidad de liderazgo...</p>
+                </div>
+                <a th:href="@{/liderazgo}" class="bg-blue-500 text-white px-4 py-2 rounded">Saber Más</a>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4">
+                <img th:src="@{/assets/Imagenes/Equipo.png}" alt="Trabajo en equipo" class="w-12 h-12">
+                <div class="flex-1">
+                    <strong class="bg-gray-200 px-2 py-1 rounded">Trabajo en equipo</strong>
+                    <p class="text-gray-700">Fortalece tu capacidad de colaboración...</p>
+                </div>
+                <a th:href="@{/trabajoequipo}" class="bg-blue-500 text-white px-4 py-2 rounded">Saber Más</a>
+            </div>
+
+            <div class="bg-white p-4 rounded-lg shadow flex items-center gap-4">
+                <img th:src="@{/assets/Imagenes/Comunicacion.png}" alt="Comunicación" class="w-12 h-12">
+                <div class="flex-1">
+                    <strong class="bg-gray-200 px-2 py-1 rounded">Comunicación</strong>
+                    <p class="text-gray-700">Fortalece tu capacidad de colaboración...</p>
+                </div>
+                <a th:href="@{/comunicacion}" class="bg-blue-500 text-white px-4 py-2 rounded">Saber Más</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="layouts/footer :: footer"></div>
+</body>
+</html>

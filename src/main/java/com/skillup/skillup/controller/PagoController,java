@@ -1,0 +1,13 @@
+package com.tuapp.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class PagoController {
+
+    @GetMapping("/estudiante/pago")
+    public String pago() {
+        return "estudiante/pago";
+    }
+}
