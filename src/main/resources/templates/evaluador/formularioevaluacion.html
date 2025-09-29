@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Evaluación - SkillUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-100 via-white to-purple-50 min-h-screen flex flex-col">
+
+<!-- Header -->
+<div th:replace="layouts/headerEvaluador :: headerEvaluador"></div>
+
+<!-- Contenido -->
+<main class="flex-grow max-w-4xl mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-10 text-center text-purple-700">
+        Registrar Evaluación
+    </h1>
+
+    <!-- Formulario -->
+    <form th:action="@{/evaluador/guardarevaluacion}" method="post"
+          class="bg-white p-8 rounded-2xl shadow-lg space-y-6 border border-purple-200">
+
+        <!-- Campo oculto: evaluadorId (lo pasamos desde el controlador) -->
+        <input type="hidden" name="evaluadorId" th:value="${evaluadorId}"/>
+
+        <!-- Estudiante -->
+        <div>
+            <label class="block font-semibold text-gray-700">Estudiante</label>
+            <select name="estudiante" required
+                    class="w-full border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400">
+                <option value="">Seleccione un estudiante</option>
+                <option th:each="e : ${estudiantes}"
+                        th:value="${e.identificacion}"
+                        th:text="${e.nombre} + ' ' + ${e.apellido1} + ' ' + ${e.apellido2}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Curso -->
+        <div>
+            <label class="block font-semibold text-gray-700">Curso</label>
+            <select name="curso" required
+                    class="w-full border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400">
+                <option value="">Seleccione un curso</option>
+                <option th:each="c : ${cursos}"
+                        th:value="${c.idCurso}"
+                        th:text="${c.nombreCurso}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Resultado -->
+        <div>
+            <label class="block font-semibold text-gray-700">Resultado (%)</label>
+            <input type="number" name="resultado" step="0.01" min="0" max="100" required
+                   class="w-full border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400">
+        </div>
+
+        <!-- Comentario -->
+        <div>
+            <label class="block font-semibold text-gray-700">Comentario</label>
+            <textarea name="comentario" rows="4"
+                      class="w-full border border-purple-300 p-2 rounded focus:ring-2 focus:ring-purple-400"
+                      placeholder="Observaciones o retroalimentación..."></textarea>
+        </div>
+
+        <!-- Botón -->
+        <div>
+            <button type="submit"
+                    class="bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg w-full hover:bg-purple-600 transition">
+                Guardar Evaluación
+            </button>
+        </div>
+    </form>
+</main>
+
+<!-- Footer -->
+<div th:replace="layouts/footer :: footer"></div>
+
+</body>
+</html>

@@ -12,6 +12,9 @@ import java.util.List;
 @Repository
 public interface CursoAdminRepository extends JpaRepository<CursoAdmin, Integer> {
 
+    List<CursoAdmin> findByIdCursoIn(List<Long> ids);
+
+
     List<CursoAdmin> findByUsuariosIdentificacion( String identificacion );
 
     @Query("SELECT c FROM CursoAdmin c JOIN FETCH c.usuarios u WHERE " +

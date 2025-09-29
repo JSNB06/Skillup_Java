@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} ?: 'SkillUp'">SkillUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-blue-100 via-white to-purple-50">
+
+<!-- ===== HEADER EVALUADOR ===== -->
+<header th:fragment="headerAdministrador">
+    <div class="bg-white shadow-sm w-full">
+        <div class="flex justify-between items-center px-6 py-6">
+
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <a th:href="@{/administrador/seleccionar}" class="text-2xl font-bold">
+                    <span class="text-black">SKILL</span><span class="text-purple-700">UP</span>
+                </a>
+            </div>
+
+            <!-- Navegación -->
+            <nav class="flex gap-4 items-center font-medium">
+
+                <!-- Nombre del usuario -->
+                <span class="text-gray-600 text-sm"
+                      th:text="${session.nombre_usuario}">Usuario</span>
+
+                <a th:href="@{/administrador/seleccionar}" class="text-blue-600 hover:text-blue-800 transition">Inicio</a>
+                <a th:href="@{/login}" class="text-red-600 hover:text-red-800 transition">Cerrar sesión</a>
+            </nav>
+        </div>
+    </div>
+</header>
+<!-- ===== FIN HEADER EVALUADOR ===== -->
+
+</body>
+</html>

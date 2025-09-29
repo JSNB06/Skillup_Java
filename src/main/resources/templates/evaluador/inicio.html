@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio Evaluador - SkillUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-50">
+<div th:replace="layouts/headerEvaluador :: headerEvaluador"></div>
+
+<!-- Tarjeta central elegante -->
+<div class="max-w-5xl mx-auto bg-white p-10 rounded-2xl shadow-2xl border border-purple-200 my-20">
+
+    <!-- Encabezado -->
+    <h1 class="text-4xl font-extrabold text-purple-700 text-center mb-6">¡Bienvenido a SkillUp!</h1>
+    <p class="text-center text-lg text-gray-600 mb-12">Selecciona la acción que deseas realizar</p>
+
+    <!-- Tarjetas de acciones -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Ver Estudiantes -->
+        <a th:href="@{/evaluador/listaestudiantes}"
+           class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl text-center p-8 shadow-md transition duration-300">
+            <div class="text-5xl mb-4">🎓</div>
+            <h2 class="text-xl font-bold text-purple-800">Ver Estudiantes</h2>
+            <p class="text-sm text-gray-600">Lista de estudiantes inscritos.</p>
+        </a>
+
+        <!-- Mis Evaluaciones -->
+        <a th:href="@{/evaluador/misevaluaciones}"
+           class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl text-center p-8 shadow-md transition duration-300">
+            <div class="text-5xl mb-4">📄</div>
+            <h2 class="text-xl font-bold text-purple-800">Mis Evaluaciones</h2>
+            <p class="text-sm text-gray-600">Consulta tus evaluaciones realizadas.</p>
+        </a>
+
+        <!-- Registrar Evaluación -->
+        <a th:href="@{/evaluador/formularioevaluacion}"
+           class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl text-center p-8 shadow-md transition duration-300">
+            <div class="text-5xl mb-4">✏️</div>
+            <h2 class="text-xl font-bold text-purple-800">Registrar Evaluación</h2>
+            <p class="text-sm text-gray-600">Evalúa estudiantes en sus cursos.</p>
+        </a>
+
+    </div>
+
+</div>
+<div th:replace="layouts/footer :: footer"></div>
+</body>
+</html>

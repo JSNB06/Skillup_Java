@@ -9,6 +9,10 @@
 
 <body class="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 via-white to-purple-50">
 
+<!-- Header -->
+<div th:replace="layouts/headerAdministrador :: header"></div>
+
+<!-- Notificación flotante -->
 <div
         th:if="${mensaje}"
         x-data="{ show: true }"
@@ -19,81 +23,72 @@
     <span th:text="${mensaje}"></span>
 </div>
 
-<div class="max-w-4xl mx-auto bg-white p-10 rounded-3xl shadow-2xl border border-purple-200 mt-10">
-    <h2 class="text-3xl font-extrabold text-purple-700 text-center mb-10">Editar Usuario</h2>
+<!-- Contenedor centrado -->
+<div class="flex-grow flex items-center justify-center my-10">
+    <div class="max-w-4xl w-full mx-auto bg-white p-10 rounded-3xl shadow-2xl border border-purple-200">
+        <h2 class="text-3xl font-extrabold text-purple-700 text-center mb-10">Editar Usuario</h2>
 
-    <form th:action="@{'/administrador/actualizar/' + ${usuarios.identificacion}}" method="post" th:object="${usuarios}" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form th:action="@{'/administrador/actualizar/' + ${usuarios.identificacion}}"
+              method="post" th:object="${usuarios}"
+              class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Identificación</label>
-            <input
-                    type="text"
-                    th:field="*{identificacion}"
-                    readonly
-                    class="w-full rounded-xl border bg-gray-100 text-gray-500 p-3 shadow cursor-not-allowed"
-            />
-        </div>
+            <!-- Campo oculto con el idRol -->
+            <input type="hidden" name="idRol" th:value="${usuarios.idRol}" />
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-            <input
-                    type="text"
-                    th:field="*{nombre}"
-                    pattern="[A-Za-zÁ-ÿ\s]+"
-                    title="Solo letras"
-                    required
-                    class="w-full rounded-xl border border-gray-300 p-3 shadow"
-            />
-        </div>
+            <!-- Identificación -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Identificación</label>
+                <input type="text" th:field="*{identificacion}" readonly
+                       class="w-full rounded-xl border bg-gray-100 text-gray-500 p-3 shadow cursor-not-allowed"/>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Primer Apellido</label>
-            <input
-                    type="text"
-                    th:field="*{apellido1}"
-                    pattern="[A-Za-zÁ-ÿ\s]+"
-                    required
-                    title="Solo letras"
-                    class="w-full rounded-xl border border-gray-300 p-3 shadow"
-            />
-        </div>
+            <!-- Nombre -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                <input type="text" th:field="*{nombre}" pattern="[A-Za-zÁ-ÿ\s]+" title="Solo letras" required
+                       class="w-full rounded-xl border border-gray-300 p-3 shadow"/>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Segundo Apellido</label>
-            <input
-                    type="text"
-                    th:field="*{apellido2}"
-                    pattern="[A-Za-zÁ-ÿ\s]*"
-                    title="Solo letras"
-                    class="w-full rounded-xl border border-gray-300 p-3 shadow"
-            />
-        </div>
+            <!-- Primer Apellido -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Primer Apellido</label>
+                <input type="text" th:field="*{apellido1}" pattern="[A-Za-zÁ-ÿ\s]+" required title="Solo letras"
+                       class="w-full rounded-xl border border-gray-300 p-3 shadow"/>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Correo</label>
-            <input
-                    type="email"
-                    th:field="*{correo}"
-                    required
-                    class="w-full rounded-xl border border-gray-300 p-3 shadow"
-            />
-        </div>
+            <!-- Segundo Apellido -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Segundo Apellido</label>
+                <input type="text" th:field="*{apellido2}" pattern="[A-Za-zÁ-ÿ\s]*" title="Solo letras"
+                       class="w-full rounded-xl border border-gray-300 p-3 shadow"/>
+            </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-            <input
-                    type="password"
-                    th:field="*{contrasena}"
-                    class="w-full rounded-xl border border-gray-300 p-3 shadow bg-gray-100 cursor-not-allowed"
-                    readonly
-            />
-        </div>
+            <!-- Correo -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Correo</label>
+                <input type="email" th:field="*{correo}" required
+                       class="w-full rounded-xl border border-gray-300 p-3 shadow"/>
+            </div>
 
-        <div class="md:col-span-2 flex justify-center mt-6">
-            <input type="submit" value="Modificar" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl font-semibold shadow transition">
-        </div>
-    </form>
+            <!-- Contraseña -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                <input type="password" th:field="*{contrasena}" readonly
+                       class="w-full rounded-xl border border-gray-300 p-3 shadow bg-gray-100 cursor-not-allowed"/>
+            </div>
+
+            <!-- Botón -->
+            <div class="md:col-span-2 flex justify-center mt-6">
+                <input type="submit" value="Modificar"
+                       class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl font-semibold shadow transition"/>
+            </div>
+        </form>
+
+    </div>
 </div>
+
+<!-- Footer -->
+<div th:replace="layouts/footer :: footer"></div>
 
 </body>
 </html>

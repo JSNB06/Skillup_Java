@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro - SkillUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[url('/images/Background.jpg')] bg-cover bg-center flex justify-center items-center min-h-screen">
+<div class="bg-blue-100 p-8 rounded-lg shadow-lg flex max-w-2xl w-full">
+    <!-- Lado izquierdo -->
+    <div class="w-1/3 flex flex-col items-center justify-center p-4 relative">
+        <a th:href="@{/home}" class="absolute top-2 left-2 text-blue-700 text-xs border border-blue-300 px-2 py-1 rounded hover:bg-blue-200"> ← Regresar</a>
+        <img th:src="@{/images/LogoSkillup.png}" alt="SkillUp Logo" class="w-32 mb-4 mt-6" />
+        <p class="text-center text-gray-600 font-semibold">Potencia tus habilidades,<br />mejora tu futuro.</p>
+    </div>
+
+    <!-- Formulario -->
+    <div class="w-2/3 p-4">
+        <h2 class="text-2xl font-semibold text-center">Crear una cuenta</h2>
+        <p class="text-center text-gray-600 mb-4">Por favor complete los siguientes datos.</p>
+
+        <!-- Mensaje de éxito -->
+        <div th:if="${mensaje}" class="text-green-600 text-center mb-4">
+            <p th:text="${mensaje}"></p>
+        </div>
+
+        <!-- Mensajes de error -->
+        <div th:if="${errores}" class="text-red-500 mb-4 text-sm">
+            <ul>
+                <li th:each="error : ${errores}" th:text="'• ' + ${error}"></li>
+            </ul>
+        </div>
+
+        <form id="registerForm" class="space-y-4" method="POST" th:action="@{/registro/guardar}" novalidate>
+
+            <!-- Documento solo números -->
+            <div>
+                <label class="block text-gray-700">Identificación</label>
+                <input type="text"
+                       name="documento"
+                       required
+                       pattern="\d{6,15}"
+                       title="Solo números, entre 6 y 15 dígitos"
+                       placeholder="Ingrese su número de documento"
+                       class="w-full p-2 border rounded-lg"
+                       th:value="${param.documento != null ? param.documento[0] : ''}" />
+            </div>
+
+            <!-- Nombre solo letras -->
+            <div>
+                <label class="block text-gray-700">Nombre</label>
+                <input type="text"
+                       name="nombre"
+                       required
+                       pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                       title="Solo letras y espacios"
+                       placeholder="Ingrese su nombre"
+                       class="w-full p-2 border rounded-lg"
+                       th:value="${param.nombre != null ? param.nombre[0] : ''}" />
+            </div>
+
+            <!-- Primer Apellido solo letras -->
+            <div>
+                <label class="block text-gray-700">Primer Apellido</label>
+                <input type="text"
+                       name="apellido1"
+                       required
+                       pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+"
+                       title="Solo letras y espacios"
+                       placeholder="Ingrese su primer apellido"
+                       class="w-full p-2 border rounded-lg"
+                       th:value="${param.apellido1 != null ? param.apellido1[0] : ''}" />
+            </div>
+
+            <!-- Segundo Apellido solo letras -->
+            <div>
+                <label class="block text-gray-700">Segundo Apellido</label>
+                <input type="text"
+                       name="apellido2"
+                       pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*"
+                       title="Solo letras y espacios"
+                       placeholder="Ingrese su segundo apellido"
+                       class="w-full p-2 border rounded-lg"
+                       th:value="${param.apellido2 != null ? param.apellido2[0] : ''}" />
+            </div>
+
+            <!-- Email con validación nativa -->
+            <div>
+                <label class="block text-gray-700">Correo electrónico</label>
+                <input type="email"
+                       id="email"
+                       name="email"
+                       required
+                       placeholder="Ingrese su correo"
+                       class="w-full p-2 border rounded-lg"
+                       th:value="${param.email != null ? param.email[0] : ''}" />
+            </div>
+
+            <!-- Contraseña -->
+            <div>
+                <label class="block text-gray-700">Contraseña</label>
+                <div class="relative">
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           required
+                           minlength="8"
+                           placeholder="Cree una contraseña"
+                           class="w-full p-2 pr-10 border rounded-lg" />
+                    <button type="button" id="togglePassword" class="absolute right-2 top-2 text-sm text-blue-500 hover:text-blue-700">Mostrar</button>
+                </div>
+            </div>
+
+            <!-- Confirmar contraseña -->
+            <div>
+                <label class="block text-gray-700">Confirmar contraseña</label>
+                <input type="password"
+                       id="confirmPassword"
+                       name="confirmPassword"
+                       required
+                       placeholder="Repita su contraseña"
+                       class="w-full p-2 border rounded-lg" />
+                <p id="passwordMismatch" class="text-red-500 text-sm hidden mt-1">Las contraseñas no coinciden</p>
+            </div>
+
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">Registrarse</button>
+            <p class="text-center text-gray-600 text-sm mt-4">
+                ¿Ya tienes cuenta? <a th:href="@{/login}" class="text-blue-500">Inicia sesión</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+<!-- Validaciones adicionales con JS -->
+<script>
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const passwordMismatch = document.getElementById("passwordMismatch");
+    const form = document.getElementById("registerForm");
+
+    // Validación en tiempo real de contraseñas
+    function validatePasswords() {
+        if (passwordInput.value && confirmPassword.value) {
+            if (passwordInput.value !== confirmPassword.value) {
+                passwordMismatch.classList.remove("hidden");
+                confirmPassword.setCustomValidity("Las contraseñas no coinciden");
+            } else {
+                passwordMismatch.classList.add("hidden");
+                confirmPassword.setCustomValidity("");
+            }
+        }
+    }
+
+    // Toggle mostrar/ocultar contraseña
+    togglePassword.addEventListener("click", () => {
+        const type = passwordInput.type === "password" ? "text" : "password";
+        passwordInput.type = type;
+        togglePassword.textContent = type === "password" ? "Mostrar" : "Ocultar";
+    });
+
+    // Validar contraseñas al escribir
+    passwordInput.addEventListener("input", validatePasswords);
+    confirmPassword.addEventListener("input", validatePasswords);
+
+    // Validar antes de enviar
+    form.addEventListener("submit", function (e) {
+        validatePasswords();
+
+        // Validar que la contraseña cumpla con los requisitos
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+        if (!passwordPattern.test(passwordInput.value)) {
+            e.preventDefault();
+            alert("La contraseña debe tener al menos una mayúscula, una minúscula, un número y mínimo 8 caracteres.");
+            return;
+        }
+
+        // Validar dominio del email
+        const email = document.getElementById("email").value;
+        const allowedDomains = ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com", "icloud.com", "skillup.com"];
+        if (email) {
+            const domain = email.split("@")[1];
+            if (domain && !allowedDomains.includes(domain.toLowerCase())) {
+                e.preventDefault();
+                alert("Dominio de correo no permitido. Use: gmail.com, hotmail.com, outlook.com, yahoo.com, icloud.com o skillup.com");
+                return;
+            }
+        }
+
+        if (passwordInput.value !== confirmPassword.value) {
+            e.preventDefault();
+        }
+    });
+
+    // Validar identificación solo números
+    document.querySelector('input[name="documento"]').addEventListener("input", function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // Validar nombres solo letras
+    function validateTextOnly(element) {
+        element.addEventListener("input", function(e) {
+            this.value = this.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, '');
+        });
+    }
+
+    validateTextOnly(document.querySelector('input[name="nombre"]'));
+    validateTextOnly(document.querySelector('input[name="apellido1"]'));
+    validateTextOnly(document.querySelector('input[name="apellido2"]'));
+</script>
+</body>
+</html>

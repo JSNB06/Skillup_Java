@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Evaluaciones - SkillUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-100 via-white to-purple-50 min-h-screen flex flex-col">
+
+<!-- Header -->
+<div th:replace="layouts/headerEvaluador :: headerEvaluador"></div>
+
+<!-- Contenido -->
+<main class="flex-grow max-w-6xl mx-auto p-8">
+    <h1 class="text-3xl font-bold text-center text-purple-700 mb-8">Evaluaciones Realizadas</h1>
+
+    <!-- Mensaje de flash -->
+    <div th:if="${mensaje != null}"
+         class="mb-6 bg-green-100 border border-green-300 text-green-700 p-3 rounded text-center"
+         th:text="${mensaje}">
+    </div>
+
+    <div class="overflow-x-auto bg-white border border-purple-200 rounded-xl shadow-lg p-4">
+        <table class="min-w-full text-sm text-center">
+            <thead class="bg-purple-200 text-gray-800">
+            <tr>
+                <th class="py-2 px-4 border">Estudiante</th>
+                <th class="py-2 px-4 border">Curso</th>
+                <th class="py-2 px-4 border">Resultado</th>
+                <th class="py-2 px-4 border">Comentario</th>
+                <th class="py-2 px-4 border">Fecha</th>
+                <th class="py-2 px-4 border">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Iteramos evaluaciones -->
+            <tr th:each="e : ${evaluaciones}" class="hover:bg-purple-50">
+                <!-- Concatenamos nombre y apellidos del estudiante -->
+                <td class="py-2 px-4 border"
+                    th:text="${e.estudiante.nombre} + ' ' + ${e.estudiante.apellido1} + ' ' + ${e.estudiante.apellido2}">
+                </td>
+                <!-- Nombre del curso -->
+                <td class="py-2 px-4 border" th:text="${e.curso.nombreCurso}"></td>
+                <td class="py-2 px-4 border" th:text="${e.resultado} + '%'"></td>
+                <td class="py-2 px-4 border" th:text="${e.comentario}"></td>
+                <td class="py-2 px-4 border" th:text="${e.fecha}"></td>
+                <td class="py-2 px-4 border space-x-2">
+                    <!-- Editar con id -->
+                    <a th:href="@{/evaluador/editarevaluacion/{id}(id=${e.id}, evaluadorId=${evaluadorId})}"
+                       class="text-purple-600 hover:underline">Editar</a>
+                    <!-- Eliminar con id -->
+                    <a th:href="@{/evaluador/eliminarevaluacion/{id}(id=${e.id}, evaluadorId=${evaluadorId})}"
+                       onclick="return confirm('¿Estás seguro de que deseas eliminar esta evaluación?')"
+                       class="text-red-500 hover:underline">Eliminar</a>
+                </td>
+            </tr>
+            <!-- Si no hay evaluaciones -->
+            <tr th:if="${#lists.isEmpty(evaluaciones)}">
+                <td colspan="6" class="py-4 text-gray-500">No hay evaluaciones registradas</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="layouts/footer :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="headerEvaluador" class="bg-white shadow-md w-full">
+    <div class="flex justify-between items-center px-6 py-6">
+        <!-- Logo -->
+        <div class="flex items-center gap-2">
+            <a th:href="@{/evaluador/inicio}" class="text-2xl font-bold">
+                <span class="text-black">SKILL</span><span class="text-purple-700">UP</span>
+            </a>
+        </div>
+
+        <!-- Navegación -->
+        <nav class="flex gap-4 items-center font-medium">
+            <span class="text-gray-600 text-sm" th:text="${session.nombre_usuario}">Usuario</span>
+            <a th:href="@{/evaluador/inicio}" class="text-blue-600 hover:text-blue-800 transition">Inicio</a>
+            <a th:href="@{/login}" class="text-red-600 hover:text-red-800 transition">Cerrar sesión</a>
+        </nav>
+    </div>
+</header>
+</body>
+</html>

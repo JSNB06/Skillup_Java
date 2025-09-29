@@ -1,4 +1,4 @@
-package com.skillup.controller;
+package com.skillup.skillup.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
