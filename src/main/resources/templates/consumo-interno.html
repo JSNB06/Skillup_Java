@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cursos Disponibles - SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100">
+
+<main class="flex-grow py-12">
+    <div class="max-w-5xl mx-auto px-6">
+
+        <h1 class="text-4xl font-extrabold text-purple-700 text-center mb-10">
+            Cursos Disponibles (Consumo del Web Service Interno)
+        </h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div th:each="curso : ${cursos}" class="bg-white shadow-xl rounded-2xl p-6 hover:shadow-2xl">
+                <h2 class="text-2xl font-bold text-purple-700 mb-4">📘 <span th:text="${curso}"></span></h2>
+                <p class="text-gray-600">Curso de habilidades blandas.</p>
+            </div>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>

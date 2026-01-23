@@ -15,17 +15,19 @@ public class Contenido {
     @JoinColumn(name = "ID_MODULO")
     private Modulo modulo;
 
-    @Column(name = "TITULO")
+    @Column(name = "TITULO", length = 200)
     private String titulo;
 
     @Column(name = "DESCRIPCION", columnDefinition = "TEXT")
     private String descripcion;
 
     @Column(name = "ORDEN")
-    private Integer orden;
+    private Integer orden = 1;
 
+    // Constructores
     public Contenido() {}
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }

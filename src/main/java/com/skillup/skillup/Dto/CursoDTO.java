@@ -13,6 +13,8 @@ public class CursoDTO {
     @Size(min = 3, max = 150, message = "El nombre debe tener entre 3 y 150 caracteres")
     private String nombre;
 
+    private String imagenUrl;
+
     @Valid
     private Set<ModuloDTO> modulos;
 
@@ -20,6 +22,15 @@ public class CursoDTO {
 
     public String getNombre() {
         return nombre;
+    }
+
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     public void setNombre(String nombre) {

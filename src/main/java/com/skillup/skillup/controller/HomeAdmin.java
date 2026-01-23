@@ -50,6 +50,9 @@ public class HomeAdmin {
         if("crearCurso".equals(rol)){
             return "redirect:/cursos/crear";
         }
+        if("gestionarCursos".equals(rol)){
+            return "redirect:/administrador/cursos/listar";
+        }
 
         List<Usuarios> usuariosFiltrados;
 

@@ -7,10 +7,8 @@
 </head>
 <body class="flex flex-col min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-50">
 
-<!-- Header -->
 <div th:replace="layouts/headerAdministrador :: header"></div>
 
-<!-- Contenido principal -->
 <main class="flex-grow py-10">
     <div class="max-w-6xl w-full mx-auto px-4">
 
@@ -30,20 +28,19 @@
                 Crear Nuevo Curso
             </h1>
             <p class="text-gray-600 mb-8">
-                Completa la información para crear un curso de habilidades blandas
+                Crea el curso y sus módulos. Luego podrás agregar el contenido educativo.
             </p>
 
-            <!-- Formulario -->
             <form id="formCurso">
 
-                <!-- 1. PANEL TÍTULO -->
+                <!-- 1. INFORMACIÓN DEL CURSO -->
                 <div class="mb-8 p-6 bg-purple-50 rounded-xl border-2 border-purple-200">
                     <h2 class="text-2xl font-bold text-purple-800 mb-4 flex items-center">
                         <span class="text-3xl mr-3">📝</span>
                         Información del Curso
                     </h2>
 
-                    <div>
+                    <div class="mb-4">
                         <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">
                             Título del Curso <span class="text-red-500">*</span>
                         </label>
@@ -51,11 +48,22 @@
                                id="nombre"
                                name="nombre"
                                placeholder="Ej: Negociación Efectiva"
-                               class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition">
+                               class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                    </div>
+
+                    <div>
+                        <label for="descripcion" class="block text-sm font-semibold text-gray-700 mb-2">
+                            Descripción del Curso
+                        </label>
+                        <textarea id="descripcion"
+                                  name="descripcion"
+                                  rows="3"
+                                  placeholder="Breve descripción del curso..."
+                                  class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition"></textarea>
                     </div>
                 </div>
 
-                <!-- 2. PANEL IMAGEN -->
+                <!-- 2. IMAGEN DEL CURSO -->
                 <div class="mb-8 p-6 bg-blue-50 rounded-xl border-2 border-blue-200">
                     <h2 class="text-2xl font-bold text-blue-800 mb-4 flex items-center">
                         <span class="text-3xl mr-3">🖼️</span>
@@ -71,9 +79,9 @@
                                    id="imagenUrl"
                                    name="imagenUrl"
                                    placeholder="https://ejemplo.com/imagen.jpg"
-                                   class="w-full px-4 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                                   class="w-full px-4 py-3 border-2 border-blue-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
                             <p class="mt-2 text-xs text-gray-500">
-                                Proporciona una URL de imagen para el curso (opcional)
+                                Proporciona una URL de imagen (opcional)
                             </p>
                         </div>
 
@@ -83,7 +91,7 @@
                     </div>
                 </div>
 
-                <!-- 3. PANEL MÓDULOS Y CONTENIDOS -->
+                <!-- 3. MÓDULOS DEL CURSO -->
                 <div class="mb-8 p-6 bg-green-50 rounded-xl border-2 border-green-200">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-2xl font-bold text-green-800 flex items-center">
@@ -97,12 +105,16 @@
                         </button>
                     </div>
 
+                    <p class="text-sm text-gray-600 mb-4">
+                        💡 <strong>Tip:</strong> Crea primero los módulos. Después podrás agregar el contenido educativo detallado de cada uno.
+                    </p>
+
                     <div id="modulosContainer" class="space-y-4">
-                        <!-- Los módulos se agregarán aquí dinámicamente -->
+                        <!-- Los módulos se agregarán aquí -->
                     </div>
                 </div>
 
-                <!-- Botones de acción -->
+                <!-- BOTONES DE ACCIÓN -->
                 <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-gray-200">
                     <button type="button"
                             id="btnGuardar"
@@ -120,11 +132,9 @@
     </div>
 </main>
 
-<!-- Footer -->
 <div th:replace="layouts/footer :: footer"></div>
 
 <script>
-    // Variables globales
     var moduloCount = 0;
 
     // Vista previa de imagen
@@ -151,7 +161,7 @@
 
     // Función para agregar módulo
     function agregarModulo() {
-        moduloCount = moduloCount + 1;
+        moduloCount++;
         var container = document.getElementById('modulosContainer');
 
         var moduloDiv = document.createElement('div');
@@ -164,36 +174,29 @@
         html += '<button type="button" class="btn-eliminar-modulo text-red-500 hover:text-red-700 font-semibold transition" data-modulo-id="' + moduloCount + '">✕ Eliminar</button>';
         html += '</div>';
 
-        html += '<div class="mb-4">';
+        html += '<div class="mb-3">';
         html += '<label class="block text-sm font-semibold text-gray-700 mb-2">Nombre del Módulo <span class="text-red-500">*</span></label>';
         html += '<input type="text" name="modulo-nombre-' + moduloCount + '" placeholder="Ej: Fundamentos de la Negociación" class="w-full px-4 py-2 border-2 border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition">';
         html += '</div>';
 
-        html += '<div class="mb-4">';
-        html += '<div class="flex justify-between items-center mb-2">';
-        html += '<label class="block text-sm font-semibold text-gray-700">Contenidos del Módulo</label>';
-        html += '<button type="button" class="btn-agregar-contenido text-sm bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded transition" data-modulo-id="' + moduloCount + '">+ Agregar Contenido</button>';
+        html += '<div class="mb-3">';
+        html += '<label class="block text-sm font-semibold text-gray-700 mb-2">Descripción del Módulo</label>';
+        html += '<textarea name="modulo-descripcion-' + moduloCount + '" rows="2" placeholder="Breve descripción del módulo..." class="w-full px-4 py-2 border-2 border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 transition"></textarea>';
         html += '</div>';
-        html += '<div id="contenidos-modulo-' + moduloCount + '" class="space-y-3"></div>';
+
+        html += '<div class="bg-blue-50 border border-blue-200 rounded-lg p-3">';
+        html += '<p class="text-sm text-blue-700">📄 Los contenidos educativos se agregarán después de guardar el curso</p>';
         html += '</div>';
 
         moduloDiv.innerHTML = html;
         container.appendChild(moduloDiv);
 
-        // Agregar event listeners
+        // Event listener para eliminar
         var btnEliminar = moduloDiv.querySelector('.btn-eliminar-modulo');
         if (btnEliminar) {
             btnEliminar.addEventListener('click', function() {
                 var moduloId = this.getAttribute('data-modulo-id');
                 eliminarModulo(moduloId);
-            });
-        }
-
-        var btnAgregarCont = moduloDiv.querySelector('.btn-agregar-contenido');
-        if (btnAgregarCont) {
-            btnAgregarCont.addEventListener('click', function() {
-                var moduloId = this.getAttribute('data-modulo-id');
-                agregarContenido(moduloId);
             });
         }
     }
@@ -206,108 +209,51 @@
         }
     }
 
-    // Función para agregar contenido
-    function agregarContenido(moduloId) {
-        var contenidosContainer = document.getElementById('contenidos-modulo-' + moduloId);
-        if (!contenidosContainer) return;
-
-        var contenidoCount = contenidosContainer.children.length + 1;
-
-        var contenidoDiv = document.createElement('div');
-        contenidoDiv.className = 'bg-blue-50 p-4 rounded-lg border border-blue-200';
-        contenidoDiv.id = 'contenido-' + moduloId + '-' + contenidoCount;
-
-        var html = '<div class="flex justify-between items-center mb-2">';
-        html += '<h4 class="font-semibold text-blue-700">📄 Contenido ' + contenidoCount + '</h4>';
-        html += '<button type="button" class="btn-eliminar-contenido text-red-500 hover:text-red-700 text-sm font-semibold transition" data-contenido-id="' + moduloId + '-' + contenidoCount + '">✕</button>';
-        html += '</div>';
-
-        html += '<div class="mb-2">';
-        html += '<input type="text" name="contenido-titulo-' + moduloId + '-' + contenidoCount + '" placeholder="Título del contenido" class="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">';
-        html += '</div>';
-
-        html += '<div>';
-        html += '<textarea name="contenido-descripcion-' + moduloId + '-' + contenidoCount + '" placeholder="Descripción del contenido" rows="2" class="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm resize-none"></textarea>';
-        html += '</div>';
-
-        contenidoDiv.innerHTML = html;
-        contenidosContainer.appendChild(contenidoDiv);
-
-        // Agregar event listener al botón eliminar
-        var btnEliminarCont = contenidoDiv.querySelector('.btn-eliminar-contenido');
-        if (btnEliminarCont) {
-            btnEliminarCont.addEventListener('click', function() {
-                var contenidoId = this.getAttribute('data-contenido-id');
-                eliminarContenido(contenidoId);
-            });
-        }
-    }
-
-    // Función para eliminar contenido
-    function eliminarContenido(contenidoId) {
-        var contenido = document.getElementById('contenido-' + contenidoId);
-        if (contenido && confirm('¿Estás seguro de eliminar este contenido?')) {
-            contenido.remove();
-        }
-    }
-
     // Función para guardar curso
     function guardarCurso() {
         var titulo = document.getElementById('nombre').value;
+        var descripcion = document.getElementById('descripcion').value;
+        var imagenUrl = document.getElementById('imagenUrl').value;
 
         if (!titulo || titulo.trim() === '') {
             alert('⚠️ Por favor, ingresa el título del curso');
             return;
         }
 
-        // Recopilar datos de módulos
+        // Recopilar módulos
         var modulos = [];
         var modulosElements = document.querySelectorAll('[id^="modulo-"]');
 
         modulosElements.forEach(function(moduloElement, index) {
-            var moduloId = moduloElement.getAttribute('data-modulo-id');
-            var nombreModuloInput = moduloElement.querySelector('input[name^="modulo-nombre-"]');
+            var nombreInput = moduloElement.querySelector('input[name^="modulo-nombre-"]');
+            var descripcionTextarea = moduloElement.querySelector('textarea[name^="modulo-descripcion-"]');
 
-            if (nombreModuloInput && nombreModuloInput.value.trim() !== '') {
-                var modulo = {
-                    nombre: nombreModuloInput.value.trim(),
-                    descripcion: '',
+            if (nombreInput && nombreInput.value.trim() !== '') {
+                modulos.push({
+                    nombre: nombreInput.value.trim(),
+                    descripcion: descripcionTextarea ? descripcionTextarea.value.trim() : '',
                     orden: index + 1,
-                    contenidos: []
-                };
-
-                // Recopilar contenidos del módulo
-                var contenidosContainer = document.getElementById('contenidos-modulo-' + moduloId);
-                if (contenidosContainer) {
-                    var contenidosElements = contenidosContainer.querySelectorAll('[id^="contenido-"]');
-
-                    contenidosElements.forEach(function(contenidoElement, contenidoIndex) {
-                        var tituloInput = contenidoElement.querySelector('input[name^="contenido-titulo-"]');
-                        var descripcionTextarea = contenidoElement.querySelector('textarea[name^="contenido-descripcion-"]');
-
-                        if (tituloInput && tituloInput.value.trim() !== '') {
-                            modulo.contenidos.push({
-                                titulo: tituloInput.value.trim(),
-                                descripcion: descripcionTextarea ? descripcionTextarea.value.trim() : '',
-                                orden: contenidoIndex + 1
-                            });
-                        }
-                    });
-                }
-
-                modulos.push(modulo);
+                    contenidos: [] // Vacío por ahora
+                });
             }
         });
 
-        // Preparar datos para enviar
+        if (modulos.length === 0) {
+            alert('⚠️ Debes agregar al menos un módulo');
+            return;
+        }
+
+        // Datos a enviar
         var data = {
             nombre: titulo,
+            descripcion: descripcion,
+            imagenUrl: imagenUrl,
             modulos: modulos
         };
 
         console.log('Datos a enviar:', data);
 
-        // Enviar datos al servidor
+        // Enviar al servidor
         fetch('/cursos/guardar', {
             method: 'POST',
             headers: {
@@ -320,7 +266,7 @@
             })
             .then(function(result) {
                 if (result.success) {
-                    alert('✅ ' + result.message);
+                    alert('✅ ' + result.message + '\n\nAhora podrás agregar contenidos a cada módulo.');
                     window.location.href = '/administrador/seleccionar';
                 } else {
                     alert('❌ ' + result.message);
@@ -328,19 +274,17 @@
             })
             .catch(function(error) {
                 console.error('Error:', error);
-                alert('❌ Error al guardar el curso. Por favor, intenta de nuevo.');
+                alert('❌ Error al guardar el curso.');
             });
     }
 
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
-        // Botón agregar módulo
         var btnAgregarModulo = document.getElementById('btnAgregarModulo');
         if (btnAgregarModulo) {
             btnAgregarModulo.addEventListener('click', agregarModulo);
         }
 
-        // Botón guardar
         var btnGuardar = document.getElementById('btnGuardar');
         if (btnGuardar) {
             btnGuardar.addEventListener('click', guardarCurso);

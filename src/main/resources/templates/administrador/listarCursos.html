@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Cursos - SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<div th:replace="layouts/headerAdministrador :: header"></div>
+
+<main class="max-w-6xl mx-auto my-8 p-6">
+
+    <!-- Header -->
+    <div class="mb-6 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-purple-700">⚙️ Gestionar Cursos</h1>
+            <p class="text-gray-600 mt-2">Administra los módulos y contenidos de tus cursos</p>
+        </div>
+        <a th:href="@{/administrador/seleccionar}"
+           class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded-lg transition">
+            ← Volver
+        </a>
+    </div>
+
+    <!-- Mensaje si no hay cursos -->
+    <div th:if="${cursos == null or cursos.isEmpty()}"
+         class="bg-white rounded-2xl shadow-lg p-12 text-center">
+        <div class="text-6xl mb-4">📚</div>
+        <h2 class="text-2xl font-bold text-gray-700 mb-2">No hay cursos creados</h2>
+        <p class="text-gray-500 mb-6">Crea tu primer curso para comenzar</p>
+        <a th:href="@{/cursos/crear}"
+           class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-6 rounded-lg transition">
+            ➕ Crear Nuevo Curso
+        </a>
+    </div>
+
+    <!-- Lista de cursos -->
+    <div th:if="${cursos != null and !cursos.isEmpty()}"
+         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <div th:each="curso : ${cursos}"
+             class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-2xl transition">
+
+            <!-- Imagen del curso -->
+            <div class="h-48 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                <img th:if="${curso.imagenUrl != null and curso.imagenUrl != ''}"
+                     th:src="${curso.imagenUrl}"
+                     th:alt="${curso.nombre}"
+                     class="w-full h-full object-cover">
+                <div th:unless="${curso.imagenUrl != null and curso.imagenUrl != ''}"
+                     class="text-white text-6xl">
+                    📚
+                </div>
+            </div>
+
+            <!-- Información del curso -->
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-purple-700 mb-2"
+                    th:text="${curso.nombre}">
+                    Nombre del Curso
+                </h3>
+                <p class="text-gray-600 text-sm mb-4"
+                   th:text="${curso.descripcion != null ? curso.descripcion : 'Sin descripción'}">
+                    Descripción del curso
+                </p>
+
+                <!-- Estadísticas -->
+                <div class="flex gap-4 mb-4 text-sm">
+                    <div class="flex items-center text-gray-600">
+                        <span class="mr-1">📖</span>
+                        <span th:text="${curso.modulos != null ? curso.modulos.size() : 0}">0</span> módulos
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div class="flex gap-2">
+                    <a th:href="@{/administrador/cursos/{id}/modulos(id=${curso.id})}"
+                       class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded-lg transition text-center">
+                        📚 Ver Módulos
+                    </a>
+                    <button onclick="alert('Función de editar en desarrollo')"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition">
+                        ✏️
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón crear curso si ya existen cursos -->
+    <div th:if="${cursos != null and !cursos.isEmpty()}" class="mt-8 text-center">
+        <a th:href="@{/cursos/crear}"
+           class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition">
+            ➕ Crear Nuevo Curso
+        </a>
+    </div>
+
+</main>
+
+<div th:replace="layouts/footer :: footer"></div>
+
+</body>
+</html>

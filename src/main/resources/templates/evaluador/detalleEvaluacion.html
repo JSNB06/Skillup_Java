@@ -1,163 +1,163 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Detalle Evaluación - Evaluador</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .respuesta-correcta {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-        }
-        .respuesta-incorrecta {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Evaluación - SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2><i class="bi bi-clipboard-check"></i> Detalle de Evaluación</h2>
-                <a th:href="@{/evaluador/evaluaciones}" class="btn btn-secondary">
-                    Volver
-                </a>
-            </div>
 
-            <!-- Alertas -->
-            <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
-                [[${success}]]
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-            <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
-                [[${error}]]
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 via-white to-purple-50">
 
-            <!-- Información General -->
-            <div class="card shadow mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h4 class="mb-0">Información General</h4>
+<div th:replace="layouts/headerEvaluador :: headerEvaluador"></div>
+
+<main class="max-w-6xl mx-auto my-8 p-6">
+
+    <!-- Volver -->
+    <div class="mb-6">
+        <a th:href="@{/evaluador/evaluaciones/historial}"
+           class="inline-flex items-center text-purple-700 hover:text-purple-900 font-medium transition">
+            ← Volver al Historial
+        </a>
+    </div>
+
+    <!-- Información General -->
+    <div class="bg-white rounded-2xl shadow-lg border-2 p-6 mb-8"
+         th:classappend="${evaluacion.estado == 'APROBADA' ? 'border-green-400' : 'border-purple-400'}">
+
+        <h1 class="text-3xl font-bold text-purple-700 mb-2">
+            Detalle de Evaluación
+        </h1>
+
+        <p class="text-xl text-gray-700 mb-2"
+           th:text="${evaluacion.curso != null ? evaluacion.curso.nombre : 'Curso no asignado'}">
+            Nombre del Curso
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 text-gray-600">
+            <p>📅 Realizada:
+                <span th:text="${#temporals.format(evaluacion.fechaEvaluacion,'dd/MM/yyyy HH:mm')}"></span>
+            </p>
+            <p th:if="${evaluacion.fechaRevision != null}">
+                ✅ Revisada:
+                <span th:text="${#temporals.format(evaluacion.fechaRevision,'dd/MM/yyyy HH:mm')}"></span>
+            </p>
+            <p>👤 Estudiante ID:
+                <span th:text="${evaluacion.idUsuario}"></span>
+            </p>
+            <p>📊 Puntaje:
+                <span th:text="${evaluacion.puntajeObtenido}"></span> /
+                <span th:text="${evaluacion.puntajeTotal}"></span>
+            </p>
+        </div>
+
+        <!-- Estado -->
+        <div class="mt-4">
+            <span th:if="${evaluacion.estado == 'APROBADA'}"
+                  class="bg-green-500 text-white px-5 py-2 rounded-full font-bold">
+                ✓ APROBADA
+            </span>
+            <span th:if="${evaluacion.estado == 'REPROBADA'}"
+                  class="bg-red-500 text-white px-5 py-2 rounded-full font-bold">
+                ✗ REPROBADA
+            </span>
+        </div>
+
+        <!-- Comentarios -->
+        <div th:if="${evaluacion.comentarios != null and evaluacion.comentarios != ''}"
+             class="mt-6 bg-gray-50 p-4 rounded-lg border-l-4"
+             th:classappend="${evaluacion.estado == 'APROBADA' ? 'border-green-500' : 'border-purple-500'}">
+            <h4 class="font-bold text-gray-700 mb-2">💬 Comentarios del Evaluador</h4>
+            <p class="text-gray-600" th:text="${evaluacion.comentarios}"></p>
+        </div>
+    </div>
+
+    <!-- Detalle de Respuestas -->
+    <div class="space-y-6">
+
+        <div th:each="respuesta, iterStat : ${evaluacion.respuestas}"
+             class="bg-white rounded-2xl shadow-lg border-2 p-6"
+             th:classappend="${respuesta.esCorrecta ? 'border-green-400' : 'border-purple-400'}">
+
+            <div class="flex gap-4">
+
+                <!-- Número -->
+                <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white"
+                     th:classappend="${respuesta.esCorrecta ? 'bg-green-600' : 'bg-purple-600'}">
+                    <span th:text="${iterStat.index + 1}"></span>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>ID Evaluación:</strong> [[${evaluacion.id}]]</p>
-                            <p><strong>Estudiante:</strong> [[${evaluacion.idUsuario}]]</p>
-                            <p><strong>Curso:</strong> [[${evaluacion.curso.titulo}]]</p>
-                            <p><strong>Fecha:</strong> [[${#temporals.format(evaluacion.fechaEvaluacion, 'dd/MM/yyyy HH:mm')}]]</p>
+
+                <div class="flex-1">
+
+                    <!-- Pregunta -->
+                    <h3 class="text-lg font-bold text-gray-800 mb-4"
+                        th:text="${respuesta.pregunta.pregunta}">
+                        ¿Pregunta?
+                    </h3>
+
+                    <!-- TÍTULO: Respuesta del estudiante -->
+                    <p class="text-sm font-semibold text-purple-700 mb-3">
+                        Respuesta del estudiante
+                    </p>
+
+                    <!-- Opciones -->
+                    <div class="space-y-2">
+
+                        <!-- Opción A -->
+                        <div th:classappend="${respuesta.respuestaSeleccionada == 'A' ?
+                             (respuesta.esCorrecta ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500') :
+                             (respuesta.pregunta.respuestaCorrecta == 'A' ? 'bg-green-50 border-green-500' : 'bg-gray-50 border-gray-200')}"
+                             class="p-3 border-2 rounded-lg">
+                            <strong>A)</strong>
+                            <span th:text="${respuesta.pregunta.opcionA}"></span>
                         </div>
-                        <div class="col-md-6">
-                            <p><strong>Puntaje Obtenido:</strong> [[${evaluacion.puntajeObtenido}]]</p>
-                            <p><strong>Puntaje Total:</strong> [[${evaluacion.puntajeTotal}]]</p>
-                            <p><strong>Porcentaje:</strong>
-                                <span class="badge fs-5"
-                                      th:classappend="${porcentaje >= 70 ? 'bg-success' : 'bg-danger'}">
-                                        [[${#numbers.formatDecimal(porcentaje, 1, 2)}]]%
-                                    </span>
-                            </p>
-                            <p><strong>Estado:</strong>
-                                <span class="badge"
-                                      th:classappend="${evaluacion.estado == 'APROBADA' ? 'bg-success' :
-                                                           evaluacion.estado == 'REPROBADA' ? 'bg-danger' :
-                                                           evaluacion.estado == 'REVISADA' ? 'bg-info' : 'bg-warning text-dark'}">
-                                        [[${evaluacion.estado}]]
-                                    </span>
-                            </p>
+
+                        <!-- Opción B -->
+                        <div th:classappend="${respuesta.respuestaSeleccionada == 'B' ?
+                             (respuesta.esCorrecta ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500') :
+                             (respuesta.pregunta.respuestaCorrecta == 'B' ? 'bg-green-50 border-green-500' : 'bg-gray-50 border-gray-200')}"
+                             class="p-3 border-2 rounded-lg">
+                            <strong>B)</strong>
+                            <span th:text="${respuesta.pregunta.opcionB}"></span>
+                        </div>
+
+                        <!-- Opción C -->
+                        <div th:classappend="${respuesta.respuestaSeleccionada == 'C' ?
+                             (respuesta.esCorrecta ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500') :
+                             (respuesta.pregunta.respuestaCorrecta == 'C' ? 'bg-green-50 border-green-500' : 'bg-gray-50 border-gray-200')}"
+                             class="p-3 border-2 rounded-lg">
+                            <strong>C)</strong>
+                            <span th:text="${respuesta.pregunta.opcionC}"></span>
+                        </div>
+
+                        <!-- Opción D -->
+                        <div th:classappend="${respuesta.respuestaSeleccionada == 'D' ?
+                             (respuesta.esCorrecta ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500') :
+                             (respuesta.pregunta.respuestaCorrecta == 'D' ? 'bg-green-50 border-green-500' : 'bg-gray-50 border-gray-200')}"
+                             class="p-3 border-2 rounded-lg">
+                            <strong>D)</strong>
+                            <span th:text="${respuesta.pregunta.opcionD}"></span>
                         </div>
                     </div>
 
-                    <!-- Información de Revisión -->
-                    <div th:if="${evaluacion.fechaRevision != null}" class="alert alert-info mt-3">
-                        <p class="mb-1"><strong>Fecha de Revisión:</strong> [[${#temporals.format(evaluacion.fechaRevision, 'dd/MM/yyyy HH:mm')}]]</p>
-                        <p class="mb-1"><strong>Evaluador:</strong> [[${evaluacion.idEvaluador}]]</p>
-                        <p class="mb-0" th:if="${evaluacion.comentarios != null}">
-                            <strong>Comentarios:</strong> [[${evaluacion.comentarios}]]
-                        </p>
+                    <!-- Puntaje -->
+                    <div class="mt-3 font-semibold">
+                        <span th:if="${respuesta.esCorrecta}" class="text-green-600">
+                            +<span th:text="${respuesta.puntajeObtenido}"></span> puntos
+                        </span>
+                        <span th:unless="${respuesta.esCorrecta}" class="text-red-600">
+                            0 puntos (Máx: <span th:text="${respuesta.pregunta.puntaje}"></span>)
+                        </span>
                     </div>
+
                 </div>
-            </div>
-
-            <!-- Detalle de Respuestas -->
-            <div class="card shadow mb-4">
-                <div class="card-header bg-dark text-white">
-                    <h4 class="mb-0">Respuestas del Estudiante</h4>
-                </div>
-                <div class="card-body">
-                    <div th:each="respuesta, iterStat : ${respuestas}"
-                         class="p-3 mb-3 rounded"
-                         th:classappend="${respuesta.esCorrecta ? 'respuesta-correcta' : 'respuesta-incorrecta'}">
-
-                        <h5 class="fw-bold">
-                                <span class="badge"
-                                      th:classappend="${respuesta.esCorrecta ? 'bg-success' : 'bg-danger'}">
-                                    Pregunta [[${iterStat.count}]]
-                                </span>
-                            [[${respuesta.pregunta.pregunta}]]
-                        </h5>
-
-                        <div class="mt-3">
-                            <p><strong>Respuesta del estudiante:</strong>
-                                <span th:text="${respuesta.respuestaSeleccionada}"></span> -
-                                <span th:switch="${respuesta.respuestaSeleccionada}">
-                                        <span th:case="'A'" th:text="${respuesta.pregunta.opcionA}"></span>
-                                        <span th:case="'B'" th:text="${respuesta.pregunta.opcionB}"></span>
-                                        <span th:case="'C'" th:text="${respuesta.pregunta.opcionC}"></span>
-                                        <span th:case="'D'" th:text="${respuesta.pregunta.opcionD}"></span>
-                                    </span>
-                                <span th:if="${respuesta.esCorrecta}" class="text-success fw-bold">✓ Correcta</span>
-                                <span th:if="${!respuesta.esCorrecta}" class="text-danger fw-bold">✗ Incorrecta</span>
-                            </p>
-
-                            <p><strong>Respuesta correcta:</strong>
-                                <span th:text="${respuesta.pregunta.respuestaCorrecta}"></span> -
-                                <span th:switch="${respuesta.pregunta.respuestaCorrecta}">
-                                        <span th:case="'A'" th:text="${respuesta.pregunta.opcionA}"></span>
-                                        <span th:case="'B'" th:text="${respuesta.pregunta.opcionB}"></span>
-                                        <span th:case="'C'" th:text="${respuesta.pregunta.opcionC}"></span>
-                                        <span th:case="'D'" th:text="${respuesta.pregunta.opcionD}"></span>
-                                    </span>
-                            </p>
-
-                            <p><strong>Puntaje pregunta:</strong> [[${respuesta.pregunta.puntaje}]] puntos</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Formulario de Revisión -->
-            <div th:if="${evaluacion.estado != 'REVISADA'}" class="card shadow mb-4">
-                <div class="card-header bg-success text-white">
-                    <h4 class="mb-0">Publicar Resultado</h4>
-                </div>
-                <div class="card-body">
-                    <form th:action="@{/evaluador/evaluaciones/{id}/publicar(id=${evaluacion.id})}" method="post">
-                        <div class="mb-3">
-                            <label for="comentarios" class="form-label">Comentarios (Opcional)</label>
-                            <textarea class="form-control"
-                                      id="comentarios"
-                                      name="comentarios"
-                                      rows="4"
-                                      placeholder="Escribe comentarios para el estudiante..."></textarea>
-                        </div>
-                        <button type="submit"
-                                class="btn btn-success btn-lg w-100"
-                                onclick="return confirm('¿Estás seguro de publicar esta evaluación?')">
-                            <i class="bi bi-check-circle"></i> Publicar Resultado
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div th:if="${evaluacion.estado == 'REVISADA'}" class="alert alert-success">
-                <strong>✓ Esta evaluación ya ha sido revisada y publicada.</strong>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</main>
+
+<div th:replace="layouts/footer :: footer"></div>
+
 </body>
 </html>

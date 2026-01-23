@@ -31,22 +31,43 @@ public class InscripcionService{
     @Autowired
     private ModuloRepository moduloRepo;
 
-    public Integer inscribirEstudiante(Integer idCurso, String identificacionUsuario){
-        if(inscripcionRepo.existsByCurso_IdAndUsuario_Identificacion(idCurso,identificacionUsuario)){
-            throw new RuntimeException("Ya existe una inscripcion en este curso");
+    public Integer inscribirEstudiante(Integer idCurso, String identificacionUsuario) {
+        // Verificar si ya está inscrito
+        if (inscripcionRepo.existsByCurso_IdAndUsuario_Identificacion(idCurso, identificacionUsuario)) {
+            throw new RuntimeException("Ya existe una inscripción en este curso");
         }
 
+        // Buscar curso y usuario
         Curso curso = cursoRepo.findById(idCurso).orElseThrow();
-        Usuarios usuario = usuariosRepo.findById(identificacionUsuario).orElseThrow();
+        Usuarios usuario = usuariosRepo
+                .findByIdentificacion(identificacionUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
+
+        // Crear inscripción
         Inscripcion inscripcion = new Inscripcion();
         inscripcion.setCurso(curso);
         inscripcion.setUsuario(usuario);
         inscripcionRepo.save(inscripcion);
 
+        // Retornar el ID del primer módulo
         return moduloRepo.findByCurso_IdOrderByOrdenAsc(idCurso).get(0).getId();
     }
 
+    /**
+     * Verifica si un estudiante está inscrito en un curso
+     *
+     * ✅ CORREGIDO: Ahora usa el método correcto del repository
+     */
+    public boolean estaInscrito(String identificacion, Integer idCurso) {
+        return inscripcionRepo
+                .existsByCurso_IdAndUsuario_Identificacion(idCurso, identificacion);
+    }
+
+
+    /**
+     * Filtra inscripciones por diferentes criterios
+     */
     public List<Inscripcion> filtrarInscripciones(String nombreCurso, String nombreUsuario, String identificacion) {
         Specification<Inscripcion> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();

@@ -35,22 +35,26 @@ public class CursoService {
         return cursoRepository.existsByNombre(nombre);
     }
 
+    //Esto devuelve DTO - Es decir para la APIs REST
     public CursoDTO obtenerCursoPorId(Integer id) {
         Curso curso = cursoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Curso no encontrado con ID: " + id));
         return cursoMapper.toDTO(curso);
     }
 
+    // Esto devuelve la entidad Curso con modulos (para las vistas)
     @Transactional(readOnly = true)
     public Curso obtenerCursoConModulos(Integer id) {
         return cursoRepository.findByIdWithModulosAndContenidos(id)
                 .orElseThrow(() -> new IllegalArgumentException("Curso no encontrado con ID: " + id));
     }
 
+
     public Curso obtenerCursoEntity(Integer id) {
         return obtenerCursoConModulos(id);
     }
 
+    //Esto obtiene todos los cursos
     @Transactional(readOnly = true)
     public List<Curso> obtenerTodos() {
         return cursoRepository.findAll();

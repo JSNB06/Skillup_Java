@@ -18,19 +18,23 @@
             <span class="text-gray-700 font-bold hidden group-hover:block">SKILLUP</span>
         </div>
         <nav class="mt-4 space-y-2">
-            <a th:href="@{/estudiante/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+            <a th:href="@{/estudiante/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-300 rounded-md transition">
                 <span class="text-xl">🏠</span> <span class="hidden group-hover:block">Inicio</span>
             </a>
-            <a th:href="@{/estudiante/cursos}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+            <a th:href="@{/estudiante/cursos}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-300 rounded-md transition">
                 <span class="text-xl">📚</span> <span class="hidden group-hover:block">Cursos</span>
             </a>
-            <a th:href="@{/estudiante/certificacioncursos}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+            <!-- ✅ NUEVO: Evaluaciones -->
+            <a th:href="@{/estudiante/evaluacion/evaluaciones}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-300 rounded-md transition">
+                <span class="text-xl">📝</span> <span class="hidden group-hover:block">Evaluaciones</span>
+            </a>
+            <a th:href="@{/estudiante/certificacioncursos}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-300 rounded-md transition">
                 <span class="text-xl">🎓</span> <span class="hidden group-hover:block">Certificados</span>
             </a>
-            <a th:href="@{/estudiante/foro}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+            <a th:href="@{/estudiante/foro}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-300 rounded-md transition">
                 <span class="text-xl">💬</span> <span class="hidden group-hover:block">Foro</span>
             </a>
-            <a th:href="@{/estudiante/soporte}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
+            <a th:href="@{/estudiante/soporte}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-300 rounded-md transition">
                 <span class="text-xl">⚙️</span> <span class="hidden group-hover:block">Soporte</span>
             </a>
         </nav>
@@ -93,7 +97,6 @@
 
 <!-- Footer -->
 <div th:replace="layouts/footer :: footer"></div>
-
 
 </body>
 </html>

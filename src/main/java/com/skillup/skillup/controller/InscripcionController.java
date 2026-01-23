@@ -16,15 +16,29 @@ public class InscripcionController {
     private InscripcionService inscripcionService;
 
     @PostMapping("/inscribirse/{idCurso}")
-    public String inscribirse(@PathVariable Integer idCurso, HttpSession session, Model model) {
+    public String inscribirse(@PathVariable Integer idCurso,
+                              HttpSession session,
+                              Model model) {
+        try {
+            // Obtener identificación del usuario desde la sesión
+            String identificacion = (String) session.getAttribute("roles_sistema");
 
-        String identificacion = (String) session.getAttribute("roles_sistema");
+            // Verificar que el usuario esté autenticado
+            if (identificacion == null) {
+                model.addAttribute("error", "Debes iniciar sesión para inscribirte");
+                return "redirect:/login";
+            }
 
-        inscripcionService.inscribirEstudiante(idCurso, identificacion);
+            // Inscribir al estudiante
+            inscripcionService.inscribirEstudiante(idCurso, identificacion);
 
-        model.addAttribute("mensaje", "¡Te has inscrito correctamente!");
-        return "estudiante/inscripcionexitosa";
+
+            return "redirect:/estudiante/curso/" + idCurso;
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al inscribirse: " + e.getMessage());
+            return "redirect:/estudiante/cursos";
+        }
     }
-
 }
 

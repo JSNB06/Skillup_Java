@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Resultados - SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+<div th:replace="layouts/headerprincipal :: header"></div>
+
+<main class="max-w-6xl mx-auto my-8 p-6">
+
+    <!-- Header con navegación -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900">📊 Mis Evaluaciones</h1>
+        <p class="text-gray-600 mt-2">Historial de evaluaciones realizadas y sus resultados</p>
+    </div>
+
+    <!-- Tabs de navegación -->
+    <div class="mb-6 border-b border-gray-200">
+        <nav class="-mb-px flex gap-8">
+            <a href="/estudiante/evaluacion/evaluaciones"
+               class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-3 px-1 font-semibold">
+                🎯 Evaluaciones Disponibles
+            </a>
+            <a href="/estudiante/evaluacion/misResultados"
+               class="border-b-2 border-purple-600 text-purple-600 py-3 px-1 font-semibold">
+                📊 Mis Resultados
+            </a>
+        </nav>
+    </div>
+
+    <!-- Si no tiene evaluaciones -->
+    <div th:if="${#lists.isEmpty(evaluaciones)}" class="bg-white rounded-xl shadow-md p-10 text-center">
+        <div class="text-6xl mb-4">📋</div>
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">Aún no has realizado ninguna evaluación</h2>
+        <p class="text-gray-600 mb-6">Completa los módulos de tus cursos para poder evaluarte</p>
+        <a href="/estudiante/evaluacion/evaluaciones"
+           class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition">
+            Ver Evaluaciones Disponibles
+        </a>
+    </div>
+
+    <!-- Lista de evaluaciones -->
+    <div class="space-y-6">
+        <div th:each="evaluacion : ${evaluaciones}"
+             class="bg-white rounded-2xl shadow-lg border-2 overflow-hidden"
+             th:classappend="${evaluacion.estado == 'APROBADA' ? 'border-green-400' :
+                             (evaluacion.estado == 'REPROBADA' ? 'border-red-400' : 'border-orange-400')}">
+
+            <!-- Header -->
+            <div class="p-6 border-b"
+                 th:classappend="${evaluacion.estado == 'APROBADA' ? 'bg-green-50' :
+                                 (evaluacion.estado == 'REPROBADA' ? 'bg-red-50' : 'bg-orange-50')}">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-2xl font-bold text-purple-700 mb-1"
+                            th:text="${evaluacion.curso.nombre}">Nombre del Curso</h3>
+                        <p class="text-gray-600 text-sm flex items-center gap-2">
+                            📅 Realizada el:
+                            <span th:text="${#temporals.format(evaluacion.fechaEvaluacion, 'dd/MM/yyyy HH:mm')}">fecha</span>
+                        </p>
+                    </div>
+
+                    <!-- Badge de estado -->
+                    <div>
+                        <span th:if="${evaluacion.estado == 'PENDIENTE'}"
+                              class="inline-block bg-orange-100 text-orange-800 text-sm font-bold px-4 py-2 rounded-full">
+                            ⏳ Pendiente
+                        </span>
+                        <span th:if="${evaluacion.estado == 'APROBADA'}"
+                              class="inline-block bg-green-100 text-green-800 text-sm font-bold px-4 py-2 rounded-full">
+                            🎉 Aprobada
+                        </span>
+                        <span th:if="${evaluacion.estado == 'REPROBADA'}"
+                              class="inline-block bg-red-100 text-red-800 text-sm font-bold px-4 py-2 rounded-full">
+                            ❌ Reprobada
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenido -->
+            <div class="p-6">
+
+                <!-- Si está PENDIENTE -->
+                <div th:if="${evaluacion.estado == 'PENDIENTE'}"
+                     class="bg-orange-50 border border-orange-200 rounded-lg p-6 text-center">
+                    <div class="text-4xl mb-3">⏳</div>
+                    <h4 class="text-lg font-bold text-orange-800 mb-2">Evaluación en Revisión</h4>
+                    <p class="text-orange-700 text-sm">
+                        Tu evaluación está siendo revisada por un evaluador.
+                        Recibirás tu calificación pronto.
+                    </p>
+                </div>
+
+                <!-- Si está CALIFICADA (APROBADA o REPROBADA) -->
+                <div th:if="${evaluacion.estado != 'PENDIENTE'}">
+                    <!-- Métricas -->
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-blue-50 p-4 rounded-lg text-center">
+                            <p class="text-gray-600 text-sm mb-1">Puntaje Obtenido</p>
+                            <p class="text-3xl font-bold text-blue-600" th:text="${evaluacion.puntajeObtenido}">10.00</p>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg text-center">
+                            <p class="text-gray-600 text-sm mb-1">Puntaje Total</p>
+                            <p class="text-3xl font-bold text-purple-600" th:text="${evaluacion.puntajeTotal}">10.00</p>
+                        </div>
+                        <div class="p-4 rounded-lg text-center"
+                             th:classappend="${evaluacion.estado == 'APROBADA' ? 'bg-green-50' : 'bg-red-50'}">
+                            <p class="text-gray-600 text-sm mb-1">Porcentaje</p>
+                            <p class="text-3xl font-bold"
+                               th:classappend="${evaluacion.estado == 'APROBADA' ? 'text-green-600' : 'text-red-600'}"
+                               th:text="${evaluacion.porcentaje + '%'}">100.00%</p>
+                        </div>
+                    </div>
+
+                    <!-- Comentarios del evaluador -->
+                    <div th:if="${evaluacion.comentarios != null and !#strings.isEmpty(evaluacion.comentarios)}"
+                         class="bg-gray-50 rounded-lg p-4 mb-4">
+                        <p class="text-gray-600 text-sm font-semibold mb-2 flex items-center gap-2">
+                            💬 Comentarios del Evaluador
+                        </p>
+                        <p class="text-gray-800 italic" th:text="${evaluacion.comentarios}">
+                            Sin comentarios
+                        </p>
+                        <p class="text-gray-500 text-xs mt-2">
+                            Revisado el:
+                            <span th:text="${#temporals.format(evaluacion.fechaRevision, 'dd/MM/yyyy HH:mm')}">fecha</span>
+                        </p>
+                    </div>
+
+                    <!-- Botón ver detalles -->
+                    <a th:href="@{/estudiante/evaluacion/detalle/{id}(id=${evaluacion.id})}"
+                       class="block w-full bg-purple-600 hover:bg-purple-700 text-white text-center font-bold py-3 px-4 rounded-lg transition">
+                        Ver Detalle de Respuestas →
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div th:replace="layouts/footer :: footer"></div>
+
+</body>
+</html>

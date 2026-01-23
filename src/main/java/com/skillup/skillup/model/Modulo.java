@@ -2,7 +2,9 @@ package com.skillup.skillup.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,9 +30,22 @@ public class Modulo {
     private Integer orden;
 
     @OneToMany(mappedBy = "modulo", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Contenido> contenidos = new HashSet<>();
+    @OrderBy("orden ASC")
+    private List<Contenido> contenidos = new ArrayList<>();
+
+    @Transient
+    private Boolean completado = false;
+
 
     public Modulo() {}
+
+    public Boolean getCompletado() {
+        return completado;
+    }
+
+    public void setCompletado(Boolean completado) {
+        this.completado = completado;
+    }
 
     public Integer getId() {
         return id;
@@ -72,11 +87,12 @@ public class Modulo {
         this.orden = orden;
     }
 
-    public Set<Contenido> getContenidos() {
+    public List<Contenido> getContenidos() {
         return contenidos;
     }
 
-    public void setContenidos(Set<Contenido> contenidos) {
+    // ✅ RECIBE List EN VEZ DE Set
+    public void setContenidos(List<Contenido> contenidos) {
         this.contenidos = contenidos;
     }
 }

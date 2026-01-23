@@ -17,7 +17,7 @@ public class Evaluacion {
     private Integer id;
 
     @Column(name = "ID_USUARIO")
-    private String idUsuario;
+    private Integer idUsuario;
 
     @ManyToOne
     @JoinColumn(name = "ID_CURSOS")
@@ -26,14 +26,17 @@ public class Evaluacion {
     @Column(name = "FECHA_EVALUACION")
     private LocalDateTime fechaEvaluacion;
 
-    @Column(name = "PUNTAJE_OBTENIDO")
+    @Column(name = "PUNTAJE_OBTENIDO", precision = 5, scale = 2)
     private BigDecimal puntajeObtenido;
 
-    @Column(name = "PUNTAJE_TOTAL")
+    @Column(name = "PUNTAJE_TOTAL", precision = 5, scale = 2)
     private BigDecimal puntajeTotal;
 
-    @Column(name = "ESTADO")
-    private String estado = "PENDIENTE"; // PENDIENTE, REVISADA, APROBADA, REPROBADA
+    @Column(name = "PORCENTAJE", precision = 5, scale = 2)
+    private BigDecimal porcentaje;
+
+    @Column(name = "ESTADO", length = 20)
+    private String estado = "PENDIENTE";
 
     @Column(name = "FECHA_REVISION")
     private LocalDateTime fechaRevision;
@@ -47,9 +50,12 @@ public class Evaluacion {
     @OneToMany(mappedBy = "evaluacion", cascade = CascadeType.ALL)
     private Set<RespuestaEvaluacion> respuestas = new HashSet<>();
 
-    // Constructores, Getters y Setters
-    public Evaluacion() {}
+    // Constructores
+    public Evaluacion() {
+        this.fechaEvaluacion = LocalDateTime.now();
+    }
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -58,11 +64,11 @@ public class Evaluacion {
         this.id = id;
     }
 
-    public String getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(String idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -96,6 +102,14 @@ public class Evaluacion {
 
     public void setPuntajeTotal(BigDecimal puntajeTotal) {
         this.puntajeTotal = puntajeTotal;
+    }
+
+    public BigDecimal getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(BigDecimal porcentaje) {
+        this.porcentaje = porcentaje;
     }
 
     public String getEstado() {

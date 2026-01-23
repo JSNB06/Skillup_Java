@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Evaluaciones - SkillUp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+
+<!-- Wrapper general -->
+<div class="flex flex-col min-h-screen">
+
+    <!-- HEADER -->
+    <div th:replace="layouts/headerprincipal :: header"></div>
+
+    <!-- MAIN -->
+    <main class="flex-grow max-w-6xl mx-auto w-full px-6 py-8">
+
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">📝 Mis Evaluaciones</h1>
+            <p class="text-gray-600 mt-2">
+                Completa los módulos de cada curso para desbloquear su evaluación final.
+            </p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mb-6 border-b border-gray-200">
+            <nav class="-mb-px flex gap-8">
+                <a href="/estudiante/evaluacion/evaluaciones"
+                   class="border-b-2 border-purple-600 text-purple-600 py-3 px-1 font-semibold">
+                    🎯 Evaluaciones Disponibles
+                </a>
+                <a href="/estudiante/evaluacion/misResultados"
+                   class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 py-3 px-1 font-semibold">
+                    📊 Mis Resultados
+                </a>
+            </nav>
+        </div>
+
+        <!-- SIN CURSOS -->
+        <div th:if="${#lists.isEmpty(evaluacionesInfo)}"
+             class="bg-white rounded-xl shadow-md p-10 text-center">
+            <div class="text-6xl mb-4">📚</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                No tienes cursos inscritos
+            </h2>
+            <p class="text-gray-600 mb-6">
+                Inscríbete en un curso para comenzar tu aprendizaje
+            </p>
+            <a th:href="@{/estudiante/cursos}"
+               class="inline-block bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                Explorar Cursos
+            </a>
+        </div>
+
+        <!-- LISTA DE EVALUACIONES -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6"
+             th:if="${!#lists.isEmpty(evaluacionesInfo)}">
+
+            <div th:each="info : ${evaluacionesInfo}"
+                 th:if="${!info.yaHizoEvaluacion}"
+                 class="bg-white rounded-2xl shadow-lg border-2 overflow-hidden"
+                 th:classappend="${info.cursoCompletado ? 'border-green-400' : 'border-gray-300'}">
+
+                <!-- Card header -->
+                <div class="p-6 border-b"
+                     th:classappend="${info.cursoCompletado ? 'bg-green-50' : 'bg-gray-50'}">
+                    <h3 class="text-2xl font-bold text-purple-700"
+                        th:text="${info.curso.nombre}">
+                        Curso
+                    </h3>
+
+                    <div class="mt-2">
+                        <span th:if="${!info.cursoCompletado}"
+                              class="inline-block bg-yellow-100 text-yellow-800 text-xs font-semibold px-3 py-1 rounded-full">
+                            🔄 En progreso
+                        </span>
+
+                        <span th:if="${info.cursoCompletado}"
+                              class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full">
+                            ✅ Listo para evaluar
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card body -->
+                <div class="p-6 space-y-4">
+
+                    <!-- Progreso -->
+                    <div>
+                        <div class="flex justify-between text-sm text-gray-600 mb-2">
+                            <span>Progreso del curso</span>
+                            <span class="font-semibold"
+                                  th:text="${info.modulosCompletados + '/' + info.totalModulos + ' módulos'}">
+                            </span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-purple-600 h-2 rounded-full"
+                                 th:style="'width:' + (${info.totalModulos > 0 ? (info.modulosCompletados * 100 / info.totalModulos) : 0}) + '%'">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NO COMPLETADO -->
+                    <div th:if="${!info.cursoCompletado}" class="space-y-3">
+                        <p class="text-gray-700 text-sm">
+                            <span class="font-semibold">Falta:</span>
+                            <span th:text="${info.totalModulos - info.modulosCompletados + ' módulo(s)'}"></span>
+                        </p>
+                        <a th:href="@{/estudiante/curso/{id}(id=${info.curso.id})}"
+                           class="block w-full bg-purple-600 hover:bg-purple-700 text-white text-center font-bold py-3 rounded-lg transition">
+                            📚 Continuar Curso
+                        </a>
+                    </div>
+
+                    <!-- COMPLETADO -->
+                    <div th:if="${info.cursoCompletado}" class="space-y-3">
+                        <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <p class="text-green-800 font-semibold">
+                                🎉 Curso completado
+                            </p>
+                            <p class="text-green-700 text-sm">
+                                Ya puedes realizar la evaluación final
+                            </p>
+                        </div>
+                        <a th:href="@{/estudiante/evaluacion/realizar/{id}(id=${info.curso.id})}"
+                           class="block w-full bg-green-600 hover:bg-green-700 text-white text-center font-bold py-3 rounded-lg transition">
+                            📝 Realizar Evaluación
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div th:if="${!#lists.isEmpty(evaluacionesInfo) and #lists.isEmpty(evaluacionesInfo.?[!yaHizoEvaluacion])}"
+             class="bg-blue-50 border border-blue-200 rounded-xl p-8 text-center mt-6">
+            <div class="text-5xl mb-3">✅</div>
+            <h3 class="text-xl font-bold text-blue-800 mb-2">
+                ¡Has completado todas las evaluaciones!
+            </h3>
+            <p class="text-blue-600 mb-4">
+                Revisa tus resultados
+            </p>
+            <a href="/estudiante/evaluacion/misResultados"
+               class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition">
+                Ver Mis Resultados
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <div th:replace="layouts/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

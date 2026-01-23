@@ -19,15 +19,19 @@ public class RespuestaEvaluacion {
     @JoinColumn(name = "ID_PREGUNTA")
     private PreguntaEvaluacion pregunta;
 
-    @Column(name = "RESPUESTA_SELECCIONADA")
-    private String respuestaSeleccionada; // 'A', 'B', 'C', 'D'
+    @Column(name = "RESPUESTA_SELECCIONADA", length = 1)
+    private String respuestaSeleccionada;
 
     @Column(name = "ES_CORRECTA")
     private Boolean esCorrecta;
 
-    // Constructores, Getters y Setters
+    @Column(name = "PUNTAJE_OBTENIDO")
+    private Integer puntajeObtenido;
+
+    // Constructores
     public RespuestaEvaluacion() {}
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -66,5 +70,13 @@ public class RespuestaEvaluacion {
 
     public void setEsCorrecta(Boolean esCorrecta) {
         this.esCorrecta = esCorrecta;
+    }
+
+    public Integer getPuntajeObtenido() {
+        return puntajeObtenido;
+    }
+
+    public void setPuntajeObtenido(Integer puntajeObtenido) {
+        this.puntajeObtenido = puntajeObtenido;
     }
 }

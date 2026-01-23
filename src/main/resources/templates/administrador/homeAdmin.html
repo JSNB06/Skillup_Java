@@ -2,109 +2,102 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Seleccionar Rol</title>
+    <title>Inicio Administrador - SkillUp</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex flex-col min-h-screen">
 
-<!-- Header -->
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 via-white to-purple-50">
+
+<!-- HEADER -->
 <div th:replace="layouts/headerAdministrador :: header"></div>
 
-<!-- Contenido principal -->
-<main class="flex-grow bg-gradient-to-br from-blue-100 via-white to-purple-50 flex items-center justify-center">
-    <div class="max-w-6xl w-full mx-auto bg-white p-10 rounded-2xl shadow-2xl border border-purple-200 my-10">
-        <h1 class="text-4xl font-extrabold text-purple-700 text-center mb-6">
+<!-- CONTENIDO -->
+<main class="flex-1 flex items-center justify-center px-6 py-12">
+
+    <div class="max-w-6xl w-full bg-white p-10 rounded-2xl shadow-2xl border border-purple-200">
+
+        <!-- Encabezado -->
+        <h1 class="text-4xl font-extrabold text-purple-700 text-center mb-4">
             ¡Un gusto tenerte en SKILLUP!
         </h1>
         <p class="text-center text-lg text-gray-600 mb-12">
-            Selecciona la accion que deseas realizar
+            Selecciona la acción que deseas realizar
         </p>
 
-        <!-- FORMULARIO PRINCIPAL -->
+        <!-- FORMULARIO (MISMA RUTA DE SIEMPRE) -->
         <form th:action="@{/administrador/filtrar}" method="post">
 
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
                 <!-- Administrador -->
-                <label class="cursor-pointer">
-                    <input type="radio" name="rol" value="1" class="sr-only peer">
-                    <div class="w-full h-44 flex flex-col items-center justify-center text-center
-            rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
-            transition peer-checked:bg-purple-200 peer-checked:border-purple-500 hover:shadow-xl">
-                        <div class="text-5xl mb-2">🛠️</div>
-                        <h3 class="text-lg font-bold text-purple-800">Administrador</h3>
-                    </div>
-                </label>
+                <button type="submit" name="rol" value="1"
+                        class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl
+                        flex flex-col items-center justify-center text-center p-8 shadow-md
+                        hover:shadow-xl transition">
+                    <div class="text-5xl mb-3">🛠️</div>
+                    <h3 class="text-xl font-bold text-purple-800">Administrador</h3>
+                </button>
 
                 <!-- Estudiante -->
-                <label class="cursor-pointer">
-                    <input type="radio" name="rol" value="2" class="sr-only peer">
-                    <div class="w-full h-44 flex flex-col items-center justify-center text-center
-            rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
-            transition peer-checked:bg-purple-200 peer-checked:border-purple-500 hover:shadow-xl">
-                        <div class="text-5xl mb-2">🎓</div>
-                        <h3 class="text-lg font-bold text-purple-800">Estudiante</h3>
-                    </div>
-                </label>
+                <button type="submit" name="rol" value="2"
+                        class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl
+                        flex flex-col items-center justify-center text-center p-8 shadow-md
+                        hover:shadow-xl transition">
+                    <div class="text-5xl mb-3">🎓</div>
+                    <h3 class="text-xl font-bold text-purple-800">Estudiante</h3>
+                </button>
 
                 <!-- Evaluador -->
-                <label class="cursor-pointer">
-                    <input type="radio" name="rol" value="3" class="sr-only peer">
-                    <div class="w-full h-44 flex flex-col items-center justify-center text-center
-            rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
-            transition peer-checked:bg-purple-200 peer-checked:border-purple-500 hover:shadow-xl">
-                        <div class="text-5xl mb-2">📝</div>
-                        <h3 class="text-lg font-bold text-purple-800">Evaluador</h3>
-                    </div>
-                </label>
+                <button type="submit" name="rol" value="3"
+                        class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl
+                        flex flex-col items-center justify-center text-center p-8 shadow-md
+                        hover:shadow-xl transition">
+                    <div class="text-5xl mb-3">📝</div>
+                    <h3 class="text-xl font-bold text-purple-800">Evaluador</h3>
+                </button>
 
-                <!-- Cursos -->
-                <label class="cursor-pointer">
-                    <input type="radio" name="rol" value="cursos" class="sr-only peer">
-                    <div class="w-full h-44 flex flex-col items-center justify-center text-center
-            rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
-            transition peer-checked:bg-purple-200 peer-checked:border-purple-500 hover:shadow-xl">
-                        <div class="text-5xl mb-2">📚</div>
-                        <h3 class="text-lg font-bold text-purple-800">Cursos</h3>
-                    </div>
-                </label>
+                <!-- Inscripciones -->
+                <button type="submit" name="rol" value="cursos"
+                        class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl
+                        flex flex-col items-center justify-center text-center p-8 shadow-md
+                        hover:shadow-xl transition">
+                    <div class="text-5xl mb-3">📚</div>
+                    <h3 class="text-xl font-bold text-purple-800">Inscripciones</h3>
+                </button>
+
+                <!-- Gestionar Cursos -->
+                <button type="submit" name="rol" value="gestionarCursos"
+                        class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl
+                        flex flex-col items-center justify-center text-center p-8 shadow-md
+                        hover:shadow-xl transition">
+                    <div class="text-5xl mb-3">⚙️</div>
+                    <h3 class="text-xl font-bold text-purple-800">Gestionar Cursos</h3>
+                </button>
 
                 <!-- Crear Curso -->
-                <label class="cursor-pointer">
-                    <input type="radio" name="rol" value="crearCurso" class="sr-only peer">
-                    <div class="w-full h-44 flex flex-col items-center justify-center text-center
-            rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
-            transition peer-checked:bg-purple-200 peer-checked:border-purple-500 hover:shadow-xl">
-                        <div class="text-5xl mb-2">➕</div>
-                        <h3 class="text-lg font-bold text-purple-800">Crear Curso</h3>
-                    </div>
-                </label>
+                <button type="submit" name="rol" value="crearCurso"
+                        class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl
+                        flex flex-col items-center justify-center text-center p-8 shadow-md
+                        hover:shadow-xl transition">
+                    <div class="text-5xl mb-3">➕</div>
+                    <h3 class="text-xl font-bold text-purple-800">Crear Curso</h3>
+                </button>
 
                 <!-- Envío de Correos -->
-                <label class="cursor-pointer">
-                    <input type="radio" name="rol" value="correo" class="sr-only peer">
-                    <div class="w-full h-44 flex flex-col items-center justify-center text-center
-            rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
-            transition peer-checked:bg-purple-200 peer-checked:border-purple-500 hover:shadow-xl">
-                        <div class="text-5xl mb-2">✉️</div>
-                        <h3 class="text-lg font-bold text-purple-800">Envío de Correos</h3>
-                    </div>
-                </label>
-
-            </div>
-
-            <div class="text-center">
-                <button type="submit"
-                        class="bg-purple-700 hover:bg-purple-800 text-white text-lg font-semibold py-3 px-8 rounded-xl shadow-lg transition">
-                    Continuar
+                <button type="submit" name="rol" value="correo"
+                        class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl
+                        flex flex-col items-center justify-center text-center p-8 shadow-md
+                        hover:shadow-xl transition">
+                    <div class="text-5xl mb-3">✉️</div>
+                    <h3 class="text-xl font-bold text-purple-800">Envío de Correos</h3>
                 </button>
-            </div>
 
+            </div>
         </form>
     </div>
 </main>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <div th:replace="layouts/footer :: footer"></div>
 
 </body>

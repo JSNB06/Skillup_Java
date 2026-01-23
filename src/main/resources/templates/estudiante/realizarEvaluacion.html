@@ -1,139 +1,166 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Realizar Evaluación</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .pregunta-card {
-            background: #f8f9fa;
-            border-left: 4px solid #007bff;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-        }
-        .opcion-radio {
-            padding: 10px;
-            margin: 5px 0;
-            border: 2px solid #e9ecef;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .opcion-radio:hover {
-            background: #e9ecef;
-        }
-        .opcion-radio input[type="radio"]:checked + label {
-            background: #007bff;
-            color: white;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizar Evaluación - SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">
-                        <i class="bi bi-file-earmark-text"></i> Evaluación Final
-                    </h3>
+<body class="bg-gray-100">
+
+<div th:replace="layouts/headerprincipal :: header"></div>
+
+<main class="max-w-5xl mx-auto my-8 p-6">
+
+    <!-- Header -->
+    <div class="bg-white rounded-2xl shadow-lg border border-purple-200 p-6 mb-6">
+        <h1 class="text-3xl font-bold text-purple-700 mb-2">📝 Evaluación Final</h1>
+        <p class="text-gray-600">Lee cuidadosamente cada pregunta y selecciona la respuesta correcta.</p>
+        <div class="mt-4 flex items-center gap-4">
+            <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                <span th:text="${preguntas.size()}">0</span> Preguntas
+            </span>
+            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                Tiempo ilimitado
+            </span>
+        </div>
+    </div>
+
+    <!-- Formulario de evaluación -->
+    <form id="formEvaluacion">
+
+        <!-- Iterar sobre las preguntas -->
+        <div th:each="pregunta, iterStat : ${preguntas}"
+             class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mb-6">
+
+            <!-- Número de pregunta -->
+            <div class="flex items-start gap-4">
+                <div class="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">
+                    <span th:text="${iterStat.index + 1}">1</span>
                 </div>
-                <div class="card-body">
-                    <div class="alert alert-info">
-                        <strong>Instrucciones:</strong> Lee cuidadosamente cada pregunta y selecciona la respuesta correcta.
-                        Una vez enviada la evaluación no podrás modificar tus respuestas.
+
+                <div class="flex-1">
+                    <!-- Pregunta -->
+                    <h3 class="text-lg font-bold text-gray-800 mb-4" th:text="${pregunta.pregunta}">
+                        ¿Pregunta?
+                    </h3>
+
+                    <!-- Opciones -->
+                    <div class="space-y-3">
+                        <!-- Opción A -->
+                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
+                            <input type="radio"
+                                   th:name="'pregunta_' + ${pregunta.id}"
+                                   value="A"
+                                   required
+                                   class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 font-medium">A)</span>
+                            <span class="ml-2 text-gray-700" th:text="${pregunta.opcionA}">Opción A</span>
+                        </label>
+
+                        <!-- Opción B -->
+                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
+                            <input type="radio"
+                                   th:name="'pregunta_' + ${pregunta.id}"
+                                   value="B"
+                                   required
+                                   class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 font-medium">B)</span>
+                            <span class="ml-2 text-gray-700" th:text="${pregunta.opcionB}">Opción B</span>
+                        </label>
+
+                        <!-- Opción C -->
+                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
+                            <input type="radio"
+                                   th:name="'pregunta_' + ${pregunta.id}"
+                                   value="C"
+                                   required
+                                   class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 font-medium">C)</span>
+                            <span class="ml-2 text-gray-700" th:text="${pregunta.opcionC}">Opción C</span>
+                        </label>
+
+                        <!-- Opción D -->
+                        <label class="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:bg-blue-50 hover:border-blue-300 transition">
+                            <input type="radio"
+                                   th:name="'pregunta_' + ${pregunta.id}"
+                                   value="D"
+                                   required
+                                   class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 font-medium">D)</span>
+                            <span class="ml-2 text-gray-700" th:text="${pregunta.opcionD}">Opción D</span>
+                        </label>
                     </div>
-
-                    <form th:action="@{/estudiante/evaluaciones/curso/{id}/enviar(id=${idCurso})}"
-                          method="post"
-                          id="formEvaluacion">
-
-                        <div th:each="pregunta, iterStat : ${preguntas}" class="pregunta-card">
-                            <h5 class="fw-bold mb-3">
-                                <span class="badge bg-secondary">Pregunta [[${iterStat.count}]]</span>
-                                [[${pregunta.pregunta}]]
-                            </h5>
-
-                            <input type="hidden" name="idPregunta" th:value="${pregunta.id}">
-
-                            <div class="opcion-radio">
-                                <input type="radio"
-                                       th:id="'pregunta_' + ${pregunta.id} + '_A'"
-                                       th:name="'respuesta_' + ${pregunta.id}"
-                                       name="respuesta"
-                                       value="A"
-                                       required>
-                                <label th:for="'pregunta_' + ${pregunta.id} + '_A'" class="ms-2">
-                                    <strong>A)</strong> [[${pregunta.opcionA}]]
-                                </label>
-                            </div>
-
-                            <div class="opcion-radio">
-                                <input type="radio"
-                                       th:id="'pregunta_' + ${pregunta.id} + '_B'"
-                                       th:name="'respuesta_' + ${pregunta.id}"
-                                       name="respuesta"
-                                       value="B"
-                                       required>
-                                <label th:for="'pregunta_' + ${pregunta.id} + '_B'" class="ms-2">
-                                    <strong>B)</strong> [[${pregunta.opcionB}]]
-                                </label>
-                            </div>
-
-                            <div class="opcion-radio">
-                                <input type="radio"
-                                       th:id="'pregunta_' + ${pregunta.id} + '_C'"
-                                       th:name="'respuesta_' + ${pregunta.id}"
-                                       name="respuesta"
-                                       value="C"
-                                       required>
-                                <label th:for="'pregunta_' + ${pregunta.id} + '_C'" class="ms-2">
-                                    <strong>C)</strong> [[${pregunta.opcionC}]]
-                                </label>
-                            </div>
-
-                            <div class="opcion-radio">
-                                <input type="radio"
-                                       th:id="'pregunta_' + ${pregunta.id} + '_D'"
-                                       th:name="'respuesta_' + ${pregunta.id}"
-                                       name="respuesta"
-                                       value="D"
-                                       required>
-                                <label th:for="'pregunta_' + ${pregunta.id} + '_D'" class="ms-2">
-                                    <strong>D)</strong> [[${pregunta.opcionD}]]
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="d-grid gap-2 mt-4">
-                            <button type="submit" class="btn btn-success btn-lg" onclick="return confirm('¿Estás seguro de enviar tu evaluación?')">
-                                <i class="bi bi-send"></i> Enviar Evaluación
-                            </button>
-                            <a th:href="@{/estudiante/cursos}" class="btn btn-secondary">
-                                Cancelar
-                            </a>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Prevenir envío accidental del formulario
+        <!-- Botón enviar -->
+        <div class="bg-white rounded-2xl shadow-lg border border-purple-200 p-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600">
+                    ⚠️ <strong>Importante:</strong> Una vez enviada la evaluación no podrás modificar tus respuestas.
+                </p>
+                <button type="submit"
+                        class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition transform hover:scale-105 whitespace-nowrap">
+                    📤 Enviar Evaluación
+                </button>
+            </div>
+        </div>
+    </form>
+
+</main>
+
+<div th:replace="layouts/footer :: footer"></div>
+
+<script th:inline="javascript">
+    var idCurso = /*[[${idCurso}]]*/ 0;
+
     document.getElementById('formEvaluacion').addEventListener('submit', function(e) {
-        const preguntas = document.querySelectorAll('.pregunta-card').length;
-        const respuestas = document.querySelectorAll('input[type="radio"]:checked').length;
+        e.preventDefault();
 
-        if (respuestas < preguntas) {
-            alert('Por favor responde todas las preguntas antes de enviar');
-            e.preventDefault();
-            return false;
+        if (!confirm('¿Estás seguro de enviar la evaluación?\n\nNo podrás modificar tus respuestas después.')) {
+            return;
         }
+
+        var formData = new FormData(this);
+        var respuestas = {};
+
+        for (var pair of formData.entries()) {
+            respuestas[pair[0]] = pair[1];
+        }
+
+        fetch('/estudiante/evaluacion/guardar/' + idCurso, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(respuestas)
+        })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json();
+            })
+            .then(function(result) {
+                if (result.success) {
+                    // ✅ Mensaje SIN puntajes
+                    alert('✅ Evaluación enviada exitosamente!\n\n' +
+                        '⏳ Tu evaluación está PENDIENTE de revisión.\n\n' +
+                        'El evaluador revisará tus respuestas y publicará los resultados pronto.');
+
+                    window.location.href = '/estudiante/evaluacion/misResultados';
+                } else {
+                    alert('❌ Error: ' + (result.message || 'No se pudo enviar la evaluación'));
+                }
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                alert('❌ Error al enviar la evaluación. Por favor, intenta de nuevo.');
+            });
     });
 </script>
+
 </body>
 </html>

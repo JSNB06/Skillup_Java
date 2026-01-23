@@ -2,6 +2,8 @@ package com.skillup.skillup.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "preguntas_evaluacion")
 public class PreguntaEvaluacion {
@@ -18,27 +20,36 @@ public class PreguntaEvaluacion {
     @Column(name = "PREGUNTA", columnDefinition = "TEXT")
     private String pregunta;
 
-    @Column(name = "OPCION_A")
+    @Column(name = "OPCION_A", length = 500)
     private String opcionA;
 
-    @Column(name = "OPCION_B")
+    @Column(name = "OPCION_B", length = 500)
     private String opcionB;
 
-    @Column(name = "OPCION_C")
+    @Column(name = "OPCION_C", length = 500)
     private String opcionC;
 
-    @Column(name = "OPCION_D")
+    @Column(name = "OPCION_D", length = 500)
     private String opcionD;
 
-    @Column(name = "RESPUESTA_CORRECTA")
+    @Column(name = "RESPUESTA_CORRECTA", length = 1)
     private String respuestaCorrecta; // 'A', 'B', 'C', 'D'
 
     @Column(name = "PUNTAJE")
     private Integer puntaje = 10;
 
-    // Constructores, Getters y Setters
-    public PreguntaEvaluacion() {}
+    @Column(name = "ACTIVA")
+    private Boolean activa = true;
 
+    @Column(name = "FECHA_CREACION")
+    private LocalDateTime fechaCreacion;
+
+    // Constructores
+    public PreguntaEvaluacion() {
+        this.fechaCreacion = LocalDateTime.now();
+    }
+
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -109,5 +120,21 @@ public class PreguntaEvaluacion {
 
     public void setPuntaje(Integer puntaje) {
         this.puntaje = puntaje;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 }

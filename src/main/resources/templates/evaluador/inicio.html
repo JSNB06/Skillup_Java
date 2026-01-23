@@ -38,8 +38,8 @@
         <a th:href="@{/evaluador/formularioevaluacion}"
            class="bg-purple-50 hover:bg-purple-200 border border-purple-300 rounded-xl text-center p-8 shadow-md transition duration-300">
             <div class="text-5xl mb-4">✏️</div>
-            <h2 class="text-xl font-bold text-purple-800">Registrar Evaluación</h2>
-            <p class="text-sm text-gray-600">Evalúa estudiantes en sus cursos.</p>
+            <h2 class="text-xl font-bold text-purple-800">Crear Evaluación</h2>
+            <p class="text-sm text-gray-600">Crea las evaluaciones de los cursos.</p>
         </a>
 
         <a th:href="@{/evaluador/cursosEval}"
@@ -48,6 +48,44 @@
           hover:bg-purple-200 hover:border-purple-500 hover:shadow-xl transition">
             <div class="text-5xl mb-2">📚</div>
             <h3 class="text-lg font-bold text-purple-800">Cursos</h3>
+        </a>
+
+        <!--  Revisar Evaluaciones Pendientes -->
+        <a th:href="@{/evaluador/evaluaciones/pendientes}"
+           class="cursor-pointer w-full h-44 flex flex-col items-center justify-center text-center
+          rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
+          hover:bg-purple-200 hover:border-purple-500 hover:shadow-xl transition">
+
+            <!-- Badge de notificación (si hay pendientes) -->
+            <span th:if="${evaluacionesPendientes > 0}"
+                  class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg animate-pulse">
+                <span th:text="${evaluacionesPendientes}">0</span> nueva(s)
+            </span>
+
+            <div class="text-5xl mb-4">🔍</div>
+            <h2 class="text-xl font-bold text-purple-800">Revisar Evaluaciones</h2>
+            <p class="text-sm text-gray-600 mt-2">Califica evaluaciones pendientes de estudiantes.</p>
+
+            <!-- Contador -->
+            <div th:if="${evaluacionesPendientes > 0}" class="mt-4">
+                <p class="text-2xl font-bold text-purple-600">
+                    <span th:text="${evaluacionesPendientes}">0</span>
+                </p>
+                <p class="text-xs text-gray-500">Pendientes de revisar</p>
+            </div>
+            <div th:if="${evaluacionesPendientes == 0}" class="mt-4">
+                <p class="text-sm text-green-600 font-semibold">✓ Sin pendientes</p>
+            </div>
+        </a>
+
+        <!-- Historial de Evaluaciones Revisadas -->
+        <a th:href="@{/evaluador/evaluaciones/historial}"
+           class="cursor-pointer w-full h-44 flex flex-col items-center justify-center text-center
+          rounded-xl p-6 border border-purple-300 bg-purple-50 shadow-md
+          hover:bg-purple-200 hover:border-purple-500 hover:shadow-xl transition">
+            <div class="text-5xl mb-4">📊</div>
+            <h2 class="text-xl font-bold text-purple-800">Historial</h2>
+            <p class="text-sm text-gray-600 mt-2">Ver todas las evaluaciones revisadas.</p>
         </a>
 
 

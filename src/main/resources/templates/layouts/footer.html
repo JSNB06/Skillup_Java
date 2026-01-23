@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-<body>
-<footer th:fragment="footer" class="bg-blue-200 text-xs text-black mt-auto w-full">
+<footer th:fragment="footer" class="bg-blue-200 text-xs text-black w-full">
     <div class="max-w-6xl mx-auto px-4 py-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
         <div>
             <h3 class="font-semibold mb-2">SOBRE NOSOTROS</h3>
@@ -11,15 +8,16 @@
                 <li><a href="#">Contenidos Académicos</a></li>
             </ul>
         </div>
+
         <div>
             <h3 class="font-semibold mb-2">PRODUCTOS Y SERVICIOS</h3>
             <ul class="space-y-1">
                 <li><a th:href="@{/cursos}">Cursos</a></li>
                 <li><a href="#">Para Empresas</a></li>
                 <li><a th:href="@{/certificacion_cursos}">Certificación de Cursos</a></li>
-                <li><a href="#">Precios</a></li>
             </ul>
         </div>
+
         <div>
             <h3 class="font-semibold mb-2">AYUDA</h3>
             <ul class="space-y-1">
@@ -29,11 +27,9 @@
         </div>
     </div>
 
-    <div class="border-t border-blue-300 mt-4 pt-2 text-center text-[11px] px-2 pb-3">
+    <div class="border-t border-blue-300 pt-2 text-center text-[11px] px-2 pb-3">
         <p>TÉRMINOS Y CONDICIONES | POLÍTICA DE PRIVACIDAD</p>
         <p>SkillUp es una incorporación de educación virtual, constituida en Colombia</p>
         <p class="font-semibold">SKILLUP S.A.S ©</p>
     </div>
 </footer>
-</body>
-</html>

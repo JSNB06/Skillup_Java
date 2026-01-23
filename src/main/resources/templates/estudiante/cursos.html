@@ -6,48 +6,72 @@
     <title>SkillUp - Cursos</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+<!-- HEADER -->
 <div th:replace="layouts/headerprincipal :: header"></div>
 
-<main class="p-6 max-w-5xl mx-auto">
-    <h1 class="text-2xl font-bold">Da tus primeros pasos.</h1>
-    <p class="text-gray-600">Descubre cursos de expertos del mundo.</p>
+<!-- CONTENIDO -->
+<main class="flex-1 max-w-6xl mx-auto px-6 py-10">
 
-    <!-- Lista de cursos DINÁMICA desde la BD -->
-    <section class="mt-6 space-y-6">
+    <!-- Título -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Da tus primeros pasos.</h1>
+        <p class="text-gray-600 mt-1">Descubre cursos de expertos del mundo.</p>
+    </div>
 
-        <!-- Iterar sobre los cursos de la base de datos -->
-        <div th:each="curso : ${cursos}" class="bg-white p-4 rounded-lg shadow flex items-center gap-4">
-            <!-- Imagen del curso (puedes agregar un campo imagenUrl en la entidad Curso) -->
-            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-blue-500 rounded-lg flex items-center justify-center text-2xl">
-                📚
+    <!-- GRID DE CURSOS -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- CARD CURSO -->
+        <div th:each="curso : ${cursos}"
+             class="bg-white rounded-2xl shadow-md hover:shadow-xl transition flex flex-col overflow-hidden">
+
+            <!-- Imagen -->
+            <div class="h-40 w-full overflow-hidden">
+                <img th:if="${curso.imagenUrl != null and !curso.imagenUrl.isEmpty()}"
+                     th:src="${curso.imagenUrl}"
+                     alt="Imagen del curso"
+                     class="w-full h-full object-cover">
+
+                <div th:if="${curso.imagenUrl == null or curso.imagenUrl.isEmpty()}"
+                     class="w-full h-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-5xl">
+                    📚
+                </div>
             </div>
 
-            <div class="flex-1">
-                <strong class="bg-gray-200 px-2 py-1 rounded" th:text="${curso.nombre}">
+            <!-- Contenido -->
+            <div class="p-5 flex-1 flex flex-col">
+                <h2 class="text-lg font-bold text-gray-800 mb-2"
+                    th:text="${curso.nombre}">
                     Nombre del Curso
-                </strong>
-                <p class="text-gray-700 mt-1">
+                </h2>
+
+                <p class="text-sm text-gray-600 mb-4">
                     <span th:if="${curso.modulos != null}"
                           th:text="${curso.modulos.size()} + ' módulos disponibles'">
-                        Módulos disponibles
+                        0 módulos disponibles
                     </span>
                     <span th:unless="${curso.modulos != null}">
                         Curso completo de habilidades blandas
                     </span>
                 </p>
-            </div>
 
-            <a th:href="@{/estudiante/cursos/{id}(id=${curso.id})}"
-               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-                Saber Más
-            </a>
+                <!-- Botón -->
+                <div class="mt-auto">
+                    <a th:href="@{/estudiante/cursos/{id}(id=${curso.id})}"
+                       class="block text-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition font-semibold">
+                        Saber Más
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <!-- Mensaje si no hay cursos -->
+        <!-- MENSAJE SIN CURSOS -->
         <div th:if="${cursos == null or cursos.isEmpty()}"
-             class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
-            <p class="text-yellow-800 font-semibold">
+             class="col-span-full bg-yellow-50 border border-yellow-200 rounded-xl p-8 text-center">
+            <p class="text-yellow-800 font-semibold text-lg">
                 📚 No hay cursos disponibles en este momento
             </p>
             <p class="text-yellow-600 text-sm mt-2">
@@ -58,7 +82,7 @@
     </section>
 </main>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <div th:replace="layouts/footer :: footer"></div>
 
 </body>

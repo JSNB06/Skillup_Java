@@ -6,11 +6,12 @@
     <title th:text="${curso.nombre}">SkillUp</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
 
 <div th:replace="layouts/headerprincipal :: header"></div>
 
-<main class="max-w-4xl mx-auto my-8 p-6 bg-white shadow-md rounded-lg relative">
+<main class="max-w-4xl mx-auto my-8 p-6 bg-white shadow-md rounded-lg relative flex-grow">
     <a th:href="@{/estudiante/cursos}"
        class="absolute top-4 left-4 text-xs text-blue-500 border border-blue-400 px-2 py-1 rounded hover:bg-blue-100">
         ← Volver
@@ -27,8 +28,20 @@
 
     <!-- IMAGEN DEL CURSO -->
     <div class="flex justify-center mt-6">
-        <div class="w-full max-h-80 bg-gradient-to-br from-purple-400 to-blue-500 rounded-lg flex items-center justify-center">
-            <span class="text-9xl">📖</span>
+        <div class="w-full max-h-80 rounded-lg overflow-hidden shadow-lg">
+
+            <!-- Imagen real si existe -->
+            <img th:if="${curso.imagenUrl != null and !curso.imagenUrl.isEmpty()}"
+                 th:src="${curso.imagenUrl}"
+                 alt="Imagen del curso"
+                 class="w-full h-80 object-cover">
+
+            <!-- Placeholder si no hay imagen -->
+            <div th:if="${curso.imagenUrl == null or curso.imagenUrl.isEmpty()}"
+                 class="w-full h-80 bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                <span class="text-9xl">📖</span>
+            </div>
+
         </div>
     </div>
 
@@ -49,7 +62,7 @@
                               th:text="'▼ MÓDULO ' + ${iterStat.index + 1}">
                             ▼ MÓDULO 1
                         </span>
-                        <span class="font-semibold text-gray-800" th:text="${modulo.nombre}">
+                        <span class="f  ont-semibold text-gray-800" th:text="${modulo.nombre}">
                             Nombre del Módulo
                         </span>
                     </div>

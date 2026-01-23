@@ -14,7 +14,7 @@ public class ProgresoModulo {
     private Integer id;
 
     @Column(name = "ID_USUARIO")
-    private String idUsuario;
+    private Integer idUsuario;
 
     @ManyToOne
     @JoinColumn(name = "ID_MODULO")
@@ -26,9 +26,10 @@ public class ProgresoModulo {
     @Column(name = "FECHA_COMPLETADO")
     private LocalDateTime fechaCompletado;
 
-    // Constructores, Getters y Setters
+    // Constructores
     public ProgresoModulo() {}
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }
@@ -37,11 +38,11 @@ public class ProgresoModulo {
         this.id = id;
     }
 
-    public String getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(String idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 

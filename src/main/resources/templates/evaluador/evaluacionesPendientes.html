@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluaciones Pendientes - SKILLUP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 via-white to-purple-50">
+
+<!-- HEADER -->
+<header class="w-full bg-purple-700 text-white shadow">
+    <div th:replace="layouts/headerEvaluador :: headerEvaluador"></div>
+</header>
+
+<!-- MAIN -->
+<main class="flex-grow max-w-6xl mx-auto w-full my-10 px-6">
+
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="bg-white/90 backdrop-blur rounded-2xl p-8 md:p-10
+                shadow-[0_20px_50px_rgba(8,_112,_184,_0.15)]
+                border border-gray-100">
+
+        <!-- TÍTULO -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-purple-700">
+                📋 Evaluaciones Pendientes de Revisión
+            </h1>
+            <p class="text-gray-600 mt-2">
+                Revisa y publica los resultados de las evaluaciones realizadas por los estudiantes
+            </p>
+        </div>
+
+        <!-- SIN EVALUACIONES -->
+        <div th:if="${evaluaciones == null or evaluaciones.isEmpty()}"
+             class="bg-gray-50 rounded-xl p-12 text-center border border-gray-200">
+
+            <div class="text-6xl mb-4">✅</div>
+            <h2 class="text-2xl font-bold text-gray-700 mb-2">
+                No hay evaluaciones pendientes
+            </h2>
+            <p class="text-gray-500">
+                Todas las evaluaciones han sido revisadas y publicadas
+            </p>
+        </div>
+
+        <!-- LISTA DE EVALUACIONES -->
+        <div th:if="${evaluaciones != null and !evaluaciones.isEmpty()}"
+             class="space-y-6">
+
+            <div th:each="evaluacion : ${evaluaciones}"
+                 class="bg-white rounded-2xl p-6 border border-gray-200
+                        shadow-md hover:shadow-xl transition-all">
+
+                <div class="flex flex-col md:flex-row justify-between gap-6">
+
+                    <!-- INFO -->
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-purple-700 mb-3"
+                            th:text="${evaluacion.curso.nombre}">
+                            Nombre del Curso
+                        </h3>
+
+                        <div class="space-y-1 text-gray-600">
+                            <p>👤 Estudiante ID:
+                                <span class="font-semibold" th:text="${evaluacion.idUsuario}">000</span>
+                            </p>
+                            <p>📅 Realizada:
+                                <span th:text="${#temporals.format(evaluacion.fechaEvaluacion, 'dd/MM/yyyy HH:mm')}">
+                                    fecha
+                                </span>
+                            </p>
+                            <p>📊 Puntaje:
+                                <span class="font-bold text-purple-600" th:text="${evaluacion.puntajeObtenido}">0</span> /
+                                <span th:text="${evaluacion.puntajeTotal}">0</span>
+                                (<span class="font-bold" th:text="${evaluacion.porcentaje}">0</span>%)
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- ACCIÓN -->
+                    <div class="flex items-center">
+                        <a th:href="@{/evaluador/evaluaciones/revisar/{id}(id=${evaluacion.id})}"
+                           class="bg-gradient-to-r from-purple-600 to-purple-700
+                                  hover:from-purple-700 hover:to-purple-800
+                                  text-white font-semibold py-3 px-7 rounded-xl
+                                  shadow-md hover:shadow-lg
+                                  active:scale-95 transition-all">
+                            Revisar →
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer class="w-full bg-purple-700 text-white mt-auto">
+    <div th:replace="layouts/footer :: footer"></div>
+</footer>
+
+</body>
+</html>
