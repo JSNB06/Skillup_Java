@@ -42,13 +42,13 @@ public class CursoMapper {
         }
 
         Modulo modulo = new Modulo();
-        modulo.setNombre(dto.getNombre()); // ✅ Cambiado de setNombre a setNombreModulo
+        modulo.setNombre(dto.getNombre());
         modulo.setDescripcion(dto.getDescripcion());
         modulo.setOrden(dto.getOrden());
         modulo.setCurso(curso);
 
         if (dto.getContenidos() != null && !dto.getContenidos().isEmpty()) {
-            // ✅ CAMBIO: De Set a List
+
             List<Contenido> contenidos = dto.getContenidos().stream()
                     .map(contenidoDTO -> toContenidoEntity(contenidoDTO, modulo))
                     .collect(Collectors.toList()); // ← Cambio aquí: toList() en vez de toSet()
@@ -99,12 +99,12 @@ public class CursoMapper {
         }
 
         ModuloDTO dto = new ModuloDTO();
-        dto.setNombre(entity.getNombre()); // ✅ Cambiado de getNombre a getNombreModulo
+        dto.setNombre(entity.getNombre());
         dto.setDescripcion(entity.getDescripcion());
         dto.setOrden(entity.getOrden());
 
         if (entity.getContenidos() != null && !entity.getContenidos().isEmpty()) {
-            // ✅ CAMBIO: Convertir List a Set para el DTO
+
             Set<ContenidoDTO> contenidosDTO = entity.getContenidos().stream()
                     .map(this::toContenidoDTO)
                     .collect(Collectors.toSet());

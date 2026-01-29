@@ -42,7 +42,7 @@ public class EvaluacionesController {
     public String verMisEvaluaciones(Model model) {
         List<PreguntaEvaluacion> preguntas = evaluacionService.obtenerTodasLasPreguntas();
         model.addAttribute("preguntas", preguntas);
-        return "evaluador/misevaluaciones"; // nombre del template Thymeleaf
+        return "evaluador/misevaluaciones";
     }
 
 }

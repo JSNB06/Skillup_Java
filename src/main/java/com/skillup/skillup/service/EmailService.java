@@ -51,8 +51,6 @@ public class EmailService {
             helper.setSubject(subject);
             helper.setText(htmlBody, true);
 
-            // OPCIONAL: Cambiar remitente
-            // helper.setFrom("tu_correo@gmail.com");
 
             mailSender.send(message);
 

@@ -31,19 +31,19 @@ public class ReporteJasperController {
     @GetMapping("/cursos/pdf")
     public ResponseEntity<byte[]> descargarReporteCursos() {
 
-        // 1. Preparar parámetros del reporte
+        //  Preparar parámetros del reporte
         Map<String, Object> parametros = new HashMap<>();
         parametros.put("TITULO", "Informe de Inscripciones por Curso");
 
-        // 2. Formatear fecha actual
+        //  Formatear fecha actual
         String fechaActual = LocalDateTime.now()
                 .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
         parametros.put("FECHA_REPORTE", fechaActual);
 
-        // 3. Generar PDF (el servicio obtiene los datos internamente)
+        //  Generar PDF (el servicio obtiene los datos internamente)
         byte[] pdfBytes = reporteJasperService.generarReporteCursosPdf(parametros);
 
-        // 4. Configurar headers para descarga directa
+        //  Configurar headers para descarga directa
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
 
@@ -55,7 +55,7 @@ public class ReporteJasperController {
         headers.setContentDispositionFormData("attachment", nombreArchivo);
         headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
 
-        // 5. Retornar el PDF
+        // Retornar el PDF
         return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
     }
 }

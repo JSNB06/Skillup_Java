@@ -34,7 +34,7 @@ public class EvaluacionService {
         this.respuestaRepository = respuestaRepository;
     }
 
-    // ========== CREAR EVALUACIÓN (EVALUADOR) ==========
+    //  CREAR EVALUACIÓN (EVALUADOR)
 
     @Transactional
     public void crearEvaluacion(EvaluacionFormDTO formDTO) {
@@ -61,7 +61,7 @@ public class EvaluacionService {
         return preguntaRepository.findAll();
     }
 
-    // ========== ESTUDIANTES ==========
+    //  ESTUDIANTES
 
     // Obtener preguntas de un curso
     @Transactional(readOnly = true)
@@ -121,7 +121,7 @@ public class EvaluacionService {
         return evaluacionRepository.findByIdUsuarioOrderByFechaEvaluacionDesc(idUsuario);
     }
 
-    // ========== EVALUADOR ==========
+    // EVALUADOR
 
     // Calificar Evaluación
     @Transactional

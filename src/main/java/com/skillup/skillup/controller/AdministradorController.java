@@ -32,8 +32,6 @@ public class AdministradorController {
     private RolService rolService;
 
 
-
-
     @GetMapping
     public String lstarAdministrador(Model model) {
 

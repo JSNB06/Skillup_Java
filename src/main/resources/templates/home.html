@@ -4,94 +4,803 @@
     <meta charset="UTF-8">
     <title th:text="${title}">SkillUp</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .animate-fadeInUp {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
 </head>
 
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-gray-50">
 
 <!-- Header -->
 <div th:replace="layouts/header :: header"></div>
 
-<div class="flex flex-1">
-    <!-- SIDEBAR -->
-    <div class="group relative w-16 hover:w-64 bg-blue-200 transition-all duration-300 overflow-hidden flex flex-col p-2">
-        <div class="flex items-center gap-2 p-2">
-            <img th:src="@{/images/LogoSkillup.png}" alt="SkillUp Logo" class="w-8 group-hover:w-10 transition-all" />
-            <span class="text-gray-700 font-bold hidden group-hover:block">SKILLUP</span>
-        </div>
-        <nav class="mt-4 space-y-2">
-            <a th:href="@{/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
-                <span class="text-xl">🏠</span> <span class="hidden group-hover:block">Inicio</span>
-            </a>
-            <a th:href="@{/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
-                <span class="text-xl">📚</span> <span class="hidden group-hover:block">Cursos</span>
-            </a>
-            <a th:href="@{/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
-                <span class="text-xl">🎓</span> <span class="hidden group-hover:block">Certificados</span>
-            </a>
-            <a th:href="@{/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
-                <span class="text-xl">💬</span> <span class="hidden group-hover:block">Foro</span>
-            </a>
-            <a th:href="@{/lobby}" class="flex items-center gap-2 p-2 text-gray-700 hover:bg-blue-200 rounded-md">
-                <span class="text-xl">⚙️</span> <span class="hidden group-hover:block">Soporte</span>
-            </a>
-        </nav>
-    </div>
 
     <!-- CONTENIDO -->
-    <main class="flex-1 px-6 md:px-16 py-12 bg-gray-50">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div class="space-y-4">
-                <h1 class="text-4xl font-extrabold text-gray-900">APRENDE SIN LÍMITES</h1>
-                <p class="text-gray-800 text-lg">Potencia tus habilidades, mejora tu futuro con herramientas, cursos y apoyo académico diseñado para ti.</p>
+    <main class="flex-1 overflow-y-auto">
 
-                <div class="flex items-start gap-3">
-                    <span class="text-purple-600 text-xl">✔️</span>
-                    <div>
-                        <strong class="text-gray-800">Tareas calificadas</strong>
-                        <p class="text-gray-600 text-sm">Reciba retroalimentación personalizada para mejorar continuamente.</p>
+        <!-- HERO SECCION CON CARRUSEL -->
+        <section class="relative bg-gradient-to-br from-purple-50 via-white to-purple-50 overflow-hidden">
+            <!-- Decorative elements -->
+            <div class="absolute top-20 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+            <div class="absolute bottom-20 left-10 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 1s;"></div>
+
+            <div class="relative max-w-7xl mx-auto px-6 md:px-16 py-20">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6 animate-fadeInUp">
+                        <div class="inline-flex items-center gap-2 bg-white border border-purple-200 px-4 py-2 rounded-full text-sm font-semibold shadow-sm">
+                            <span class="relative flex h-3 w-3">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-3 w-3 bg-purple-500"></span>
+                            </span>
+                            <span class="text-gray-700">Plataforma 100% Gratuita</span>
+                        </div>
+
+                        <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                            Desarrolla las
+                            <span class="gradient-text">Habilidades del Futuro</span>
+                        </h1>
+
+                        <p class="text-xl text-gray-600 leading-relaxed">
+                            Domina el liderazgo, la comunicación efectiva y el trabajo en equipo. Impulsa tu carrera con las competencias más demandadas del mercado laboral.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                            <div class="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all">
+                                <div class="bg-purple-100 p-2 rounded-lg flex-shrink-0">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">Acceso ilimitado</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all">
+                                <div class="bg-purple-100 p-2 rounded-lg flex-shrink-0">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">Certificaciones gratis</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all">
+                                <div class="bg-purple-100 p-2 rounded-lg flex-shrink-0">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">A tu propio ritmo</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all">
+                                <div class="bg-purple-100 p-2 rounded-lg flex-shrink-0">
+                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-gray-700 font-medium">Comunidad activa</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-6 flex flex-col sm:flex-row gap-4">
+                            <a th:href="@{/lobby}"
+                               class="group bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg px-8 py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                                <span>Comenzar Ahora</span>
+                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                                </svg>
+                            </a>
+                            <a th:href="@{/lobby}"
+                               class="border-2 border-purple-600 text-purple-600 hover:bg-purple-50 font-bold text-lg px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                                <span>Ver Cursos</span>
+                            </a>
+                        </div>
+
+                        <!-- Estrellas de confianza -->
+                        <div class="pt-8 flex items-center gap-6 text-sm text-gray-600">
+                            <div class="flex items-center gap-2">
+                                <div class="flex -space-x-2">
+                                    <div class="w-8 h-8 rounded-full bg-purple-400 border-2 border-white"></div>
+                                    <div class="w-8 h-8 rounded-full bg-purple-500 border-2 border-white"></div>
+                                    <div class="w-8 h-8 rounded-full bg-purple-600 border-2 border-white"></div>
+                                </div>
+                                <span class="font-semibold">+5,000 estudiantes</span>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                                <span class="font-semibold">4.9/5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CARRUSEL DE IMÁGENES MEJORADO -->
+                    <div class="relative h-96 md:h-[550px]">
+                        <div class="carousel-container relative w-full h-full">
+                            <!-- Slide 1 -->
+                            <div class="carousel-slide absolute w-full h-full transition-opacity duration-1000">
+                                <div class="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl">
+                                    <img th:src="@{/images/certificadoSkillup.png}"
+                                         alt="Certificación SkillUp"
+                                         class="w-full h-full object-cover" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                                    <div class="absolute bottom-0 left-0 right-0 p-8">
+                                        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+                                            <h3 class="text-white font-bold text-2xl mb-2">Certificación Profesional</h3>
+                                            <p class="text-white/90">Valida tus habilidades con certificados reconocidos internacionalmente</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 2 -->
+                            <div class="carousel-slide absolute w-full h-full transition-opacity duration-1000 opacity-0">
+                                <div class="w-full h-full bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl shadow-2xl flex items-center justify-center">
+                                    <div class="text-center text-white p-8">
+                                        <div class="text-7xl mb-6 animate-float">👥</div>
+                                        <h3 class="font-bold text-4xl mb-3">Trabajo en Equipo</h3>
+                                        <p class="text-xl text-purple-100">Colabora efectivamente y construye relaciones sólidas</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 3 -->
+                            <div class="carousel-slide absolute w-full h-full transition-opacity duration-1000 opacity-0">
+                                <div class="w-full h-full bg-gradient-to-br from-purple-500 to-purple-700 rounded-3xl shadow-2xl flex items-center justify-center">
+                                    <div class="text-center text-white p-8">
+                                        <div class="text-7xl mb-6 animate-float">🎯</div>
+                                        <h3 class="font-bold text-4xl mb-3">Liderazgo Efectivo</h3>
+                                        <p class="text-xl text-purple-100">Inspira y guía equipos hacia el éxito</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Slide 4 -->
+                            <div class="carousel-slide absolute w-full h-full transition-opacity duration-1000 opacity-0">
+                                <div class="w-full h-full bg-gradient-to-br from-purple-600 to-indigo-600 rounded-3xl shadow-2xl flex items-center justify-center">
+                                    <div class="text-center text-white p-8">
+                                        <div class="text-7xl mb-6 animate-float">💬</div>
+                                        <h3 class="font-bold text-4xl mb-3">Comunicación Asertiva</h3>
+                                        <p class="text-xl text-purple-100">Expresa tus ideas con claridad y confianza</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Indicadores mejorados -->
+                        <div class="absolute -bottom-6 left-0 right-0 flex justify-center gap-3 z-10">
+                            <button class="carousel-indicator w-3 h-3 rounded-full bg-purple-600 shadow-lg transition-all hover:scale-125" data-slide="0"></button>
+                            <button class="carousel-indicator w-3 h-3 rounded-full bg-purple-300 transition-all hover:scale-125" data-slide="1"></button>
+                            <button class="carousel-indicator w-3 h-3 rounded-full bg-purple-300 transition-all hover:scale-125" data-slide="2"></button>
+                            <button class="carousel-indicator w-3 h-3 rounded-full bg-purple-300 transition-all hover:scale-125" data-slide="3"></button>
+                        </div>
                     </div>
                 </div>
-                <div class="flex items-start gap-3">
-                    <span class="text-purple-600 text-xl">✔️</span>
-                    <div>
-                        <strong class="text-gray-800">Asistencia académica</strong>
-                        <p class="text-gray-600 text-sm">Asesoría inmediata de tutores y comunidad estudiantil.</p>
+            </div>
+        </section>
+
+        <!-- HABILIDADES BLANDAS DETALLADAS -->
+        <section id="habilidades" class="bg-white py-20">
+            <div class="max-w-7xl mx-auto px-6 md:px-16">
+                <div class="text-center mb-16">
+                    <div class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                        Habilidades Clave
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        Domina las Competencias Más Demandadas
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        El <span class="font-bold text-purple-600">85%</span> del éxito profesional depende de las habilidades blandas. Desarrolla las competencias que las empresas valoran más.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Liderazgo -->
+                    <div class="group bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all transform hover:scale-105 border border-purple-100">
+                        <div class="bg-gradient-to-br from-purple-500 to-purple-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">👑</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Liderazgo</h3>
+                        <p class="text-gray-600 mb-6">
+                            Aprende a inspirar, motivar y guiar equipos hacia el éxito. Desarrolla tu capacidad de tomar decisiones estratégicas.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Liderazgo transformacional</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Gestión de equipos</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Toma de decisiones</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Resolución de conflictos</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Comunicación -->
+                    <div class="group bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all transform hover:scale-105 border border-purple-100">
+                        <div class="bg-gradient-to-br from-purple-400 to-purple-500 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">💬</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Comunicación</h3>
+                        <p class="text-gray-600 mb-6">
+                            Domina el arte de expresar ideas con claridad y persuasión en cualquier contexto profesional.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Comunicación asertiva</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Oratoria y presentaciones</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Escucha activa</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Lenguaje corporal</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Trabajo en Equipo -->
+                    <div class="group bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all transform hover:scale-105 border border-purple-100">
+                        <div class="bg-gradient-to-br from-purple-600 to-purple-700 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">👥</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Trabajo en Equipo</h3>
+                        <p class="text-gray-600 mb-6">
+                            Colabora eficientemente en entornos diversos y construye relaciones profesionales sólidas.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Colaboración efectiva</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Construcción de confianza</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Roles en equipos</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Sinergia grupal</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Negociación -->
+                    <div class="group bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all transform hover:scale-105 border border-purple-100">
+                        <div class="bg-gradient-to-br from-purple-400 to-purple-500 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">🤝</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Negociación</h3>
+                        <p class="text-gray-600 mb-6">
+                            Desarrolla estrategias ganar-ganar y cierra acuerdos exitosos en cualquier contexto.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Técnicas de negociación</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Manejo de objeciones</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Persuasión efectiva</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Acuerdos estratégicos</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Inteligencia Emocional -->
+                    <div class="group bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all transform hover:scale-105 border border-purple-100">
+                        <div class="bg-gradient-to-br from-purple-500 to-purple-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">🧠</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Inteligencia Emocional</h3>
+                        <p class="text-gray-600 mb-6">
+                            Gestiona emociones y desarrolla empatía para relaciones profesionales más efectivas.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Autoconocimiento</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Autorregulación emocional</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Empatía y conexión</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-600"></div>
+                                <span>Habilidades sociales</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Pensamiento Crítico -->
+                    <div class="group bg-gradient-to-br from-white to-purple-50 rounded-2xl shadow-lg p-8 hover:shadow-2xl transition-all transform hover:scale-105 border border-purple-100">
+                        <div class="bg-gradient-to-br from-purple-400 to-purple-500 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <span class="text-4xl">🔍</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Pensamiento Crítico</h3>
+                        <p class="text-gray-600 mb-6">
+                            Analiza situaciones complejas y toma decisiones informadas con perspectiva estratégica.
+                        </p>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Análisis y síntesis</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Resolución de problemas</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Pensamiento estratégico</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                <span>Toma de decisiones</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ESTADÍSTICAS CON ANIMACIÓN -->
+        <section class="bg-gradient-to-br from-purple-600 to-purple-700 py-20">
+            <div class="max-w-7xl mx-auto px-6 md:px-16">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Resultados que Hablan por Sí Mismos
+                    </h2>
+                    <p class="text-purple-100 text-lg">
+                        Más de 5,000 profesionales confían en SkillUp
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-8">
+                    <div class="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/20 transition-all">
+                        <div class="text-5xl font-bold text-white mb-2">+5,000</div>
+                        <p class="text-white font-semibold">Estudiantes activos</p>
+                        <p class="text-purple-200 text-sm mt-2">Aprendiendo cada día</p>
+                    </div>
+                    <div class="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/20 transition-all">
+                        <div class="text-5xl font-bold text-white mb-2">20+</div>
+                        <p class="text-white font-semibold">Cursos disponibles</p>
+                        <p class="text-purple-200 text-sm mt-2">100% gratuitos</p>
+                    </div>
+                    <div class="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/20 transition-all">
+                        <div class="text-5xl font-bold text-white mb-2">85%</div>
+                        <p class="text-white font-semibold">Éxito profesional</p>
+                        <p class="text-purple-200 text-sm mt-2">Depende de soft skills</p>
+                    </div>
+                    <div class="text-center p-6 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/20 transition-all">
+                        <div class="text-5xl font-bold text-white mb-2">98%</div>
+                        <p class="text-white font-semibold">Satisfacción</p>
+                        <p class="text-purple-200 text-sm mt-2">Recomiendan SkillUp</p>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="flex justify-center">
-                <img th:src="@{/images/Certificado.jpg}" alt="Certificado" class="w-full max-w-sm rounded-lg shadow-lg" />
-            </div>
-        </div>
+        <!-- CÓMO FUNCIONA -->
+        <section id="como-funciona" class="bg-gray-50 py-20">
+            <div class="max-w-7xl mx-auto px-6 md:px-16">
+                <div class="text-center mb-16">
+                    <div class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                        Proceso Simple
+                    </div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                        Comienza en 3 Pasos
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Tu camino hacia el éxito profesional nunca fue tan fácil
+                    </p>
+                </div>
 
-        <!-- Estadísticas -->
-        <div class="mt-12 bg-white rounded-xl shadow-md p-6 grid grid-cols-1 sm:grid-cols-3 text-center gap-6">
-            <div>
-                <p class="text-3xl font-bold text-purple-700">+5,000</p>
-                <p class="text-gray-600">Estudiantes activos</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-purple-700">85%</p>
-                <p class="text-gray-600">Del éxito profesional depende de habilidades blandas</p>
-            </div>
-            <div>
-                <p class="text-3xl font-bold text-purple-700">98%</p>
-                <p class="text-gray-600">Satisfacción estudiantil</p>
-            </div>
-        </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Paso 1 -->
+                    <div class="relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+                        <div class="absolute -top-6 left-8 bg-gradient-to-br from-purple-500 to-purple-600 w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                            1
+                        </div>
+                        <div class="pt-4">
+                            <div class="bg-purple-100 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Regístrate Gratis</h3>
+                            <p class="text-gray-600">
+                                Crea tu cuenta en segundos sin necesidad de tarjeta de crédito ni compromisos.
+                            </p>
+                        </div>
+                    </div>
 
-        <!-- CTA -->
-        <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl p-10 text-center shadow-lg mt-10">
-            <h2 class="text-2xl md:text-3xl font-bold mb-4">¿Listo para comenzar?</h2>
-            <p class="mb-6 text-lg">Explora nuestros cursos y da el primer paso hacia tu futuro profesional.</p>
-            <a th:href="@{/lobby}" class="bg-white text-blue-600 font-semibold px-6 py-2 rounded-full hover:bg-gray-100 transition">Explorar Cursos</a>
-        </div>
+                    <!-- Paso 2 -->
+                    <div class="relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+                        <div class="absolute -top-6 left-8 bg-gradient-to-br from-purple-500 to-purple-600 w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                            2
+                        </div>
+                        <div class="pt-4">
+                            <div class="bg-purple-100 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Elige tu Curso</h3>
+                            <p class="text-gray-600">
+                                Explora nuestra biblioteca de cursos y selecciona las habilidades que deseas desarrollar.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Paso 3 -->
+                    <div class="relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all">
+                        <div class="absolute -top-6 left-8 bg-gradient-to-br from-purple-500 to-purple-600 w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                            3
+                        </div>
+                        <div class="pt-4">
+                            <div class="bg-purple-100 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">Certifícate</h3>
+                            <p class="text-gray-600">
+                                Completa los módulos, supera las evaluaciones y obtén tu certificado profesional.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BENEFICIOS -->
+        <section id="beneficios" class="bg-white py-20">
+            <div class="max-w-7xl mx-auto px-6 md:px-16">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                        ¿Por qué elegir SkillUp?
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        La plataforma gratuita diseñada para tu éxito profesional
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex gap-6 bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border border-purple-100">
+                        <div class="bg-purple-500 p-4 rounded-xl h-fit">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Aprendizaje Personalizado</h3>
+                            <p class="text-gray-600">
+                                Avanza a tu propio ritmo con un sistema adaptable a tu estilo de aprendizaje y horarios, sin presiones.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border border-purple-100">
+                        <div class="bg-purple-500 p-4 rounded-xl h-fit">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Seguimiento de Progreso</h3>
+                            <p class="text-gray-600">
+                                Monitorea tu avance con métricas claras, evaluaciones detalladas y retroalimentación de expertos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border border-purple-100">
+                        <div class="bg-purple-500 p-4 rounded-xl h-fit">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Certificaciones Gratuitas</h3>
+                            <p class="text-gray-600">
+                                Obtén certificados verificables sin costo que validen tus habilidades ante empleadores globales.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-6 bg-gradient-to-br from-purple-50 to-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all border border-purple-100">
+                        <div class="bg-purple-500 p-4 rounded-xl h-fit">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Comunidad Activa</h3>
+                            <p class="text-gray-600">
+                                Conéctate con miles de profesionales que comparten tus objetivos de crecimiento y desarrollo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- SECCIÓN NOSOTROS -->
+        <section id="nosotros" class="bg-gray-50 py-20">
+            <div class="max-w-7xl mx-auto px-6 md:px-16">
+
+                <!-- Header de la sección -->
+                <div class="text-center mb-16">
+                    <div class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                        Nuestro Equipo
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                        Construyendo el Futuro de la Educación
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Somos un equipo apasionado por democratizar el acceso a la educación de calidad en habilidades blandas
+                    </p>
+                </div>
+
+                <!-- Historia del Proyecto -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                    <!-- Texto -->
+                    <div class="space-y-6">
+                        <div class="inline-flex items-center gap-2 bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>Nuestra Historia</span>
+                        </div>
+
+                        <h3 class="text-3xl font-bold text-gray-900">
+                            Nacimos de una Visión Compartida
+                        </h3>
+
+                        <p class="text-lg text-gray-600 leading-relaxed">
+                            En 2024, un grupo de profesionales en análisis y desarrollo de software con distintas habilidades nos reunimos con una pregunta en común:
+                            <span class="font-semibold text-purple-600">¿Por qué la educación en habilidades blandas es tan inaccesible?</span>
+                        </p>
+
+                        <p class="text-lg text-gray-600 leading-relaxed">
+                            Vimos cómo muchas personas con gran potencial no lograban destacar en sus carreras,
+                            no por falta de conocimientos técnicos, sino por la ausencia de habilidades como el liderazgo,
+                            la comunicación efectiva o la inteligencia emocional.
+                        </p>
+
+                        <p class="text-lg text-gray-600 leading-relaxed">
+                            Así nació <span class="font-bold text-purple-600">SkillUp</span>: una plataforma 100% gratuita
+                            que democratiza el acceso a la formación en competencias que realmente transforman carreras.
+                        </p>
+
+                        <!-- Estadísticas del equipo -->
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div class="bg-white p-6 rounded-xl shadow-md border border-purple-100">
+                                <div class="text-3xl font-bold text-purple-600 mb-2">2024</div>
+                                <p class="text-gray-600 font-medium">Año de fundación</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-md border border-purple-100">
+                                <div class="text-3xl font-bold text-purple-600 mb-2">4</div>
+                                <p class="text-gray-600 font-medium">Miembros fundadores</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen / Ilustración -->
+                    <div class="relative">
+                        <div class="bg-gradient-to-br from-purple-400 to-purple-600 rounded-3xl p-8 shadow-2xl">
+                            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                                <div class="space-y-6">
+                                    <!-- Valores del equipo -->
+                                    <div class="flex items-start gap-4">
+                                        <div class="bg-white p-3 rounded-xl flex-shrink-0">
+                                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-bold text-lg mb-1">Innovación</h4>
+                                            <p class="text-purple-100 text-sm">Tecnología al servicio del aprendizaje</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-4">
+                                        <div class="bg-white p-3 rounded-xl flex-shrink-0">
+                                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-bold text-lg mb-1">Accesibilidad</h4>
+                                            <p class="text-purple-100 text-sm">Educación gratuita para todos</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-4">
+                                        <div class="bg-white p-3 rounded-xl flex-shrink-0">
+                                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-bold text-lg mb-1">Calidad</h4>
+                                            <p class="text-purple-100 text-sm">Contenido avalado por expertos</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-start gap-4">
+                                        <div class="bg-white p-3 rounded-xl flex-shrink-0">
+                                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-bold text-lg mb-1">Comunidad</h4>
+                                            <p class="text-purple-100 text-sm">Crecemos juntos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Elemento decorativo -->
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-purple-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
+                    </div>
+                </div>
+
+                <!-- Misión y Visión -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                    <!-- Misión -->
+                    <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-purple-600 hover:shadow-xl transition-all">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-purple-100 p-3 rounded-xl">
+                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Nuestra Misión</h3>
+                        </div>
+                        <p class="text-lg text-gray-600 leading-relaxed">
+                            Democratizar el acceso a la educación en habilidades blandas, proporcionando herramientas
+                            gratuitas de alta calidad que permitan a cualquier persona desarrollar las competencias
+                            necesarias para alcanzar su máximo potencial profesional.
+                        </p>
+                    </div>
+
+                    <!-- Visión -->
+                    <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-purple-600 hover:shadow-xl transition-all">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="bg-purple-100 p-3 rounded-xl">
+                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900">Nuestra Visión</h3>
+                        </div>
+                        <p class="text-lg text-gray-600 leading-relaxed">
+                            Ser la plataforma líder en América Latina para el desarrollo de habilidades blandas,
+                            reconocida por su calidad, innovación y compromiso con la educación accesible para todos,
+                            transformando vidas y carreras profesionales.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CTA de unirse -->
+                <div class="bg-gradient-to-br from-purple-600 to-purple-700 rounded-3xl p-12 text-center shadow-2xl">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        ¿Quieres Formar Parte de Nuestra Comunidad?
+                    </h3>
+                    <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+                        Únete a miles de profesionales que están transformando sus carreras con SkillUp
+                    </p>
+                    <a th:href="@{/registro}" class="inline-flex items-center gap-2 bg-white text-purple-600 hover:bg-gray-100 font-bold text-lg px-10 py-4 rounded-xl transition-all transform hover:scale-105 shadow-xl">
+                        <span>Comenzar Gratis Ahora</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+
     </main>
 </div>
 
 <!-- Footer -->
 <div th:replace="layouts/footer :: footer"></div>
+
+<script>
+    // Carrusel automático
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const indicators = document.querySelectorAll('.carousel-indicator');
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.style.opacity = i === index ? '1' : '0';
+        });
+        indicators.forEach((indicator, i) => {
+            if (i === index) {
+                indicator.classList.remove('bg-purple-300');
+                indicator.classList.add('bg-purple-600');
+            } else {
+                indicator.classList.remove('bg-purple-600');
+                indicator.classList.add('bg-purple-300');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Auto-avanzar cada 4 segundos
+    setInterval(nextSlide, 4000);
+
+    // Click en indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -33,9 +33,7 @@ public class RegistrarseService {
     private static final Pattern PATTERN_CONTRASEÑA = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$");
     private static final Pattern PATTERN_EMAIL = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
 
-    /**
-     * Valida todos los campos del DTO de registro
-     */
+
     public List<String> validarRegistro(RegistroDTO dto) {
         List<String> errores = new ArrayList<>();
         Locale locale = Locale.getDefault();
@@ -117,9 +115,7 @@ public class RegistrarseService {
         return errores;
     }
 
-    /**
-     * Guarda un usuario a partir del DTO
-     */
+
     public void guardarUsuario(RegistroDTO dto) {
         Registrarse usuario = new Registrarse();
         usuario.setIdentificacion(dto.getIdentificacion());
@@ -133,30 +129,22 @@ public class RegistrarseService {
         registrarseRepository.save(usuario);
     }
 
-    /**
-     * Verifica si existe un usuario con la identificación dada
-     */
+
     public boolean existeUsuario(String identificacion) {
         return registrarseRepository.existsByIdentificacion(identificacion);
     }
 
-    /**
-     * Verifica si existe un usuario con el correo dado
-     */
+
     public boolean existeUsuarioPorCorreo(String correo) {
         return registrarseRepository.existsByCorreo(correo);
     }
 
-    /**
-     * Normaliza un string (trim y manejo de nulos)
-     */
+
     private String normalizar(String valor) {
         return valor != null ? valor.trim() : "";
     }
 
-    /**
-     * Extrae el dominio de un correo electrónico
-     */
+
     private String extraerDominio(String email) {
         if (email == null || !email.contains("@")) {
             return "";

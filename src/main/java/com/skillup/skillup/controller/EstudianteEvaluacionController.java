@@ -57,7 +57,7 @@ public class EstudianteEvaluacionController {
             info.put("curso", curso);
             info.put("inscripcion", inscripcion);
 
-            // Verificar si completó todos los módulos usando tu servicio
+            // Verificar si completó todos los módulos usando el servicio
             boolean cursoCompletado = progresoService.puedeHacerEvaluacion(idUsuario, curso.getId());
 
             // Obtener progreso de módulos
@@ -171,7 +171,7 @@ public class EstudianteEvaluacionController {
                         .body(Map.of("success", false, "message", "Ya has realizado esta evaluación"));
             }
 
-            // Convertir respuestas: "pregunta_123" -> Map<Integer, String>
+
             Map<Integer, String> respuestas = new HashMap<>();
 
             for (Map.Entry<String, String> entry : respuestasRaw.entrySet()) {

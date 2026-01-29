@@ -30,7 +30,7 @@ public class SecurityConfig {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
 
-        // SIN ENCRIPTACIÓN (como pediste)
+        // SIN ENCRIPTACIÓN
         authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
         return authProvider;

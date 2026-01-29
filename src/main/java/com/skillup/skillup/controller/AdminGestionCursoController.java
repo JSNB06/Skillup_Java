@@ -23,6 +23,7 @@ public class AdminGestionCursoController {
     @Autowired
     private ModuloService moduloService;
 
+    //LISTAR LOS CURSOS
     @GetMapping("/listar")
     public String listarCursos(Model model) {
         List<Curso> cursos = cursoService.obtenerTodos();
@@ -30,6 +31,7 @@ public class AdminGestionCursoController {
         return "administrador/listarCursos";
     }
 
+    // VER MODULOS POR CURSOS
     @GetMapping("/{idCurso}/modulos")
     public String verModulos(@PathVariable Integer idCurso, Model model) {
         try {

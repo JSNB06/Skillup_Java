@@ -22,12 +22,9 @@ public class EvaluadorController {
     @Autowired
     private UsuariosRepository usuariosRepository;
 
-    /**
-     * Página de inicio del evaluador
-     */
     @GetMapping("/inicio")
     public String inicio(HttpSession session, Model model) {
-        // Obtener el ID del evaluador desde la sesión (guardado como "roles_sistema")
+        // Obtener el ID del evaluador desde la sesión
         String evaluadorId = (String) session.getAttribute("roles_sistema");
 
         // Verificar que esté autenticado
@@ -42,16 +39,14 @@ public class EvaluadorController {
                     evaluador.get().getNombre() + " " + evaluador.get().getApellido1());
         }
 
-        // También puedes usar directamente el nombre que ya guardaste en sesión
+
         String nombreUsuario = (String) session.getAttribute("nombre_usuario");
         model.addAttribute("nombreUsuario", nombreUsuario);
 
         return "evaluador/inicio";
     }
 
-    /**
-     * Lista de estudiantes (usuarios con rol 2)
-     */
+
     @GetMapping("/listaestudiantes")
     public String listaEstudiantes(HttpSession session, Model model) {
         // Verificar que esté autenticado

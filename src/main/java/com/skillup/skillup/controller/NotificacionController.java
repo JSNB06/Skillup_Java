@@ -17,11 +17,6 @@ public class NotificacionController {
         this.notificacionService = notificacionService;
     }
 
-    /**
-     * ENDPOINT PARA ENVÍO MASIVO DE CORREOS
-     *
-     * POST /api/notificaciones/email/clientes
-     */
     @PostMapping("/email/estudiantes")
     public ResponseEntity<ApiResponse<String>> sendEmailToClients(
             @Validated @RequestBody NotificacionRequest request

@@ -9,7 +9,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String index(Model model) {
-        model.addAttribute("title", "SkillUp"); // equivalente al ['title'=>'SkillUp']
-        return "home"; // busca en templates/home.html
+        model.addAttribute("title", "SkillUp");
+        return "home";
     }
 }

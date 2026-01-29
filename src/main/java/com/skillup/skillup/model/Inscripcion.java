@@ -2,6 +2,9 @@ package com.skillup.skillup.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 @Table(name = "inscripciones",
         uniqueConstraints = @UniqueConstraint(columnNames = {"ID_CURSOS", "IDENTIFICACION"}))
@@ -22,6 +25,9 @@ public class Inscripcion {
 
     @Column(name = "ESTADO")
     private String estado = "inscrito";
+
+    @Column(name = "FECHA_INSCRIPCION")
+    private LocalDate fechaInscripcion;
 
     public Integer getId() {
         return id;
@@ -53,5 +59,13 @@ public class Inscripcion {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public LocalDate getFechaInscripcion() {
+        return fechaInscripcion;
+    }
+
+    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+        this.fechaInscripcion = fechaInscripcion;
     }
 }

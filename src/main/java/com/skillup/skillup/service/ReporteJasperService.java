@@ -22,19 +22,19 @@ public class ReporteJasperService {
 
     public byte[] generarReporteCursosPdf(Map<String, Object> parametros) {
         try {
-            // 1. Obtener datos de la BD
+            //  Obtener datos de la BD
             List<CursoReporteDto> datosCursos = obtenerDatosCursos();
 
-            // 2. Validar que haya datos
+            //  Validar que haya datos
             if (datosCursos.isEmpty()) {
                 throw new RuntimeException("No hay cursos registrados para generar el reporte");
             }
 
-            // 3. Calcular totales (asegurarse de que sean Integer)
+            //  Calcular totales (asegurarse de que sean Integer)
             Integer totalCursos = cursoRepository.contarTotalCursos();
             Integer totalInscripciones = cursoRepository.contarTotalInscripciones();
 
-            // 4. Agregar parámetros
+            //  Agregar parámetros
             parametros.put("TOTAL_CURSOS", totalCursos);
             parametros.put("TOTAL_INSCRIPCIONES", totalInscripciones);
 
@@ -44,7 +44,7 @@ public class ReporteJasperService {
             System.out.println("Total Inscripciones: " + totalInscripciones + " (Tipo: " + totalInscripciones.getClass().getName() + ")");
             System.out.println("Cantidad de cursos en lista: " + datosCursos.size());
 
-            // 5. Cargar plantilla
+            //  Cargar plantilla
             InputStream reporteStream =
                     getClass().getResourceAsStream("/reports/reporte_cursos.jrxml");
 
@@ -52,18 +52,18 @@ public class ReporteJasperService {
                 throw new RuntimeException("No se encontró el archivo reporte_cursos.jrxml");
             }
 
-            // 6. Compilar
+            //  Compilar
             JasperReport jasperReport = JasperCompileManager.compileReport(reporteStream);
 
-            // 7. DataSource
+            //  DataSource
             JRBeanCollectionDataSource dataSource =
                     new JRBeanCollectionDataSource(datosCursos);
 
-            // 8. Llenar
+            //  Llenar
             JasperPrint jasperPrint =
                     JasperFillManager.fillReport(jasperReport, parametros, dataSource);
 
-            // 9. Exportar
+            //  Exportar
             return JasperExportManager.exportReportToPdf(jasperPrint);
 
         } catch (JRException e) {

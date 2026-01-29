@@ -5,23 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title th:text="${title} ?: 'SkillUp'">SkillUp</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Hamburgesa menu animado */
+        .hamburger-line {
+            transition: all 0.3s ease;
+        }
+        .menu-open .line1 {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-open .line2 {
+            opacity: 0;
+        }
+        .menu-open .line3 {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-slideDown {
+            animation: slideDown 0.3s ease-out;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
 
-<!-- HEADER -->
-<header th:fragment="header" class="bg-white shadow-md w-full">
-    <div class="flex justify-between items-center px-6 py-4">
-        <div class="flex items-center gap-2">
-            <a th:href="@{/home}" class="text-2xl font-bold">
-                <span class="text-black">SKILL</span><span class="text-purple-700">UP</span>
-            </a>
+<!-- HEADER CON NAVBAR LANDING PAGE -->
+<header th:fragment="header" class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-purple-100 shadow-sm">
+
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+
+            <!-- Logo  -->
+            <div class="flex items-center gap-3">
+                <img th:src="@{/images/LogoSkillup.png}" alt="SkillUp Logo" class="h-12 w-12" />
+                <a th:href="@{/home}" class="text-2xl font-bold">
+                    <span class="text-gray-900">SKILL</span><span class="gradient-text">UP</span>
+                </a>
+            </div>
+
+            <!-- Desktop Menu - CENTRADO -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#habilidades" class="text-gray-700 hover:text-purple-600 font-medium transition-colors smooth-scroll">
+                    Habilidades
+                </a>
+                <a href="#como-funciona" class="text-gray-700 hover:text-purple-600 font-medium transition-colors smooth-scroll">
+                    Cómo Funciona
+                </a>
+                <a href="#beneficios" class="text-gray-700 hover:text-purple-600 font-medium transition-colors smooth-scroll">
+                    Beneficios
+                </a>
+                <a href="#nosotros" class="text-gray-700 hover:text-purple-600 font-medium transition-colors smooth-scroll">
+                    Nosotros
+                </a>
+            </div>
+
+            <!-- Botones de Autenticacion -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a th:href="@{/login}" class="text-purple-600 hover:text-purple-700 font-semibold transition-colors">
+                    Iniciar Sesión
+                </a>
+                <a th:href="@{/registro}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-3 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center gap-2">
+                    <span>Comenzar Gratis</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Boton de menu Mobile -->
+            <button id="mobile-menu-button" class="lg:hidden p-2 rounded-lg hover:bg-purple-50 transition-all">
+                <div class="w-6 h-5 flex flex-col justify-between">
+                    <span class="hamburger-line line1 block h-0.5 w-full bg-purple-600 rounded"></span>
+                    <span class="hamburger-line line2 block h-0.5 w-full bg-purple-600 rounded"></span>
+                    <span class="hamburger-line line3 block h-0.5 w-full bg-purple-600 rounded"></span>
+                </div>
+            </button>
         </div>
-        <div class="flex gap-3">
-            <a th:href="@{/login}" class="border border-blue-500 text-blue-500 px-4 py-1 rounded hover:bg-blue-50">Iniciar sesión</a>
-            <a th:href="@{/registro}" class="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600">Registrarse</a>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-purple-100 animate-slideDown">
+        <div class="px-6 py-6 space-y-4">
+            <a href="#habilidades" class="block text-gray-700 hover:text-purple-600 font-medium py-2 smooth-scroll">
+                Habilidades
+            </a>
+            <a href="#como-funciona" class="block text-gray-700 hover:text-purple-600 font-medium py-2 smooth-scroll">
+                Cómo Funciona
+            </a>
+            <a href="#beneficios" class="block text-gray-700 hover:text-purple-600 font-medium py-2 smooth-scroll">
+                Beneficios
+            </a>
+            <a href="#nosotros" class="block text-gray-700 hover:text-purple-600 font-medium py-2 smooth-scroll">
+                Nosotros
+            </a>
+
+            <!-- Auth Buttons Mobile -->
+            <div class="pt-4 space-y-3 border-t border-purple-200">
+                <a th:href="@{/login}" class="block w-full text-center text-purple-600 font-semibold py-3 hover:bg-purple-50 rounded-lg transition-all">
+                    Iniciar Sesión
+                </a>
+                <a th:href="@{/registro}" class="block w-full bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-3 rounded-xl text-center transition-all shadow-lg">
+                    Comenzar Gratis
+                </a>
+            </div>
         </div>
     </div>
 </header>
+
+<script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.classList.toggle('menu-open');
+            });
+
+            // Cerrar menú al hacer click en un enlace
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.classList.remove('menu-open');
+                });
+            });
+        }
+
+        // Smooth scroll para enlaces internos
+        document.querySelectorAll('.smooth-scroll').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    // Ajustar offset por el navbar fixed
+                    const navbarHeight = 80;
+                    const targetPosition = targetElement.offsetTop - navbarHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    // Cerrar menú móvil si está abierto
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.classList.remove('menu-open');
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

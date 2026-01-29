@@ -54,20 +54,14 @@ public class InscripcionService{
         return moduloRepo.findByCurso_IdOrderByOrdenAsc(idCurso).get(0).getId();
     }
 
-    /**
-     * Verifica si un estudiante está inscrito en un curso
-     *
-     * ✅ CORREGIDO: Ahora usa el método correcto del repository
-     */
+
     public boolean estaInscrito(String identificacion, Integer idCurso) {
         return inscripcionRepo
                 .existsByCurso_IdAndUsuario_Identificacion(idCurso, identificacion);
     }
 
 
-    /**
-     * Filtra inscripciones por diferentes criterios
-     */
+
     public List<Inscripcion> filtrarInscripciones(String nombreCurso, String nombreUsuario, String identificacion) {
         Specification<Inscripcion> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();

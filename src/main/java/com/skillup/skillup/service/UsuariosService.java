@@ -35,7 +35,7 @@ public class UsuariosService {
 
         emailService.sendWelcomeEmail(
                 usuario.getCorreo(),
-                usuario.getIdentificacion()  // Cambia por el campo con el nombre real
+                usuario.getIdentificacion()
         );
 
         return nuevo;
